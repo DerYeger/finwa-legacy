@@ -1,33 +1,26 @@
 package eu.yeger
 
-import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.auth.*
-import io.ktor.util.*
-import io.ktor.features.*
-import org.slf4j.event.*
-import io.ktor.locations.*
-import io.ktor.serialization.*
-import io.micrometer.prometheus.*
-import io.ktor.metrics.micrometer.*
-import io.ktor.auth.jwt.*
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.application.*
-import io.ktor.response.*
+import io.ktor.auth.*
+import io.ktor.auth.jwt.*
+import io.ktor.features.*
+import io.ktor.http.*
+import io.ktor.locations.*
+import io.ktor.metrics.micrometer.*
 import io.ktor.request.*
+import io.ktor.response.*
+import io.ktor.routing.*
+import io.ktor.serialization.*
+import io.micrometer.prometheus.*
+import org.slf4j.event.*
 
-fun main(args: Array<String>): Unit =
-    io.ktor.server.netty.EngineMain.main(args)
+public fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
-/**
- * Please note that you can use any other name instead of *module*.
- * Also note that you can have more then one modules in your application.
- * */
 @Suppress("unused") // Referenced in application.conf
-@kotlin.jvm.JvmOverloads
-fun Application.module(testing: Boolean = false) {
+public fun Application.mainModule() {
 
     install(CallLogging) {
         level = Level.INFO
@@ -49,7 +42,6 @@ fun Application.module(testing: Boolean = false) {
     install(Locations) {
     }
 
-
     install(ContentNegotiation) {
         json()
     }
@@ -58,40 +50,39 @@ fun Application.module(testing: Boolean = false) {
 
     install(MicrometerMetrics) {
         registry = appMicrometerRegistry
-        // ...
     }
-    authentication {
-        basic(name = "myauth1") {
-            realm = "Ktor Server"
-            validate { credentials ->
-                if (credentials.name == credentials.password) {
-                    UserIdPrincipal(credentials.name)
-                } else {
-                    null
-                }
-            }
-        }
-
-        form(name = "myauth2") {
-            userParamName = "user"
-            passwordParamName = "password"
-            challenge {
-                /**/
-            }
-        }
-    }
-    val jwtIssuer = environment.config.property("jwt.domain").getString()
-    val jwtAudience = environment.config.property("jwt.audience").getString()
-    val jwtRealm = environment.config.property("jwt.realm").getString()
-    authentication {
-        jwt {
-            realm = jwtRealm
-            verifier(makeJwtVerifier(jwtIssuer, jwtAudience))
-            validate { credential ->
-                if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
-            }
-        }
-    }
+//    authentication {
+//        basic(name = "myauth1") {
+//            realm = "Ktor Server"
+//            validate { credentials ->
+//                if (credentials.name == credentials.password) {
+//                    UserIdPrincipal(credentials.name)
+//                } else {
+//                    null
+//                }
+//            }
+//        }
+//
+//        form(name = "myauth2") {
+//            userParamName = "user"
+//            passwordParamName = "password"
+//            challenge {
+//                /**/
+//            }
+//        }
+//    }
+//    val jwtIssuer = environment.config.property("jwt.domain").getString()
+//    val jwtAudience = environment.config.property("jwt.audience").getString()
+//    val jwtRealm = environment.config.property("jwt.realm").getString()
+//    authentication {
+//        jwt {
+//            realm = jwtRealm
+//            verifier(makeJwtVerifier(jwtIssuer, jwtAudience))
+//            validate { credential ->
+//                if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
+//            }
+//        }
+//    }
     routing {
         get("/") {
             call.respondText("Hello World!")
@@ -117,7 +108,6 @@ fun Application.module(testing: Boolean = false) {
             exception<AuthorizationException> { cause ->
                 call.respond(HttpStatusCode.Forbidden)
             }
-
         }
     }
     routing {
@@ -130,35 +120,36 @@ fun Application.module(testing: Boolean = false) {
             call.respond(appMicrometerRegistry.scrape())
         }
     }
-    routing {
-        authenticate("myauth1") {
-            get("/protected/route/basic") {
-                val principal = call.principal<UserIdPrincipal>()!!
-                call.respondText("Hello ${principal.name}")
-            }
-        }
-        authenticate("myauth1") {
-            get("/protected/route/form") {
-                val principal = call.principal<UserIdPrincipal>()!!
-                call.respondText("Hello ${principal.name}")
-            }
-        }
-    }
+//    routing {
+//        authenticate("myauth1") {
+//            get("/protected/route/basic") {
+//                val principal = call.principal<UserIdPrincipal>()!!
+//                call.respondText("Hello ${principal.name}")
+//            }
+//        }
+//        authenticate("myauth1") {
+//            get("/protected/route/form") {
+//                val principal = call.principal<UserIdPrincipal>()!!
+//                call.respondText("Hello ${principal.name}")
+//            }
+//        }
+//    }
 }
 
 @Location("/location/{name}")
-class MyLocation(val name: String, val arg1: Int = 42, val arg2: String = "default")
+public class MyLocation(public val name: String, public val arg1: Int = 42, public val arg2: String = "default")
+
 @Location("/type/{name}")
-data class Type(val name: String) {
+public data class Type(val name: String) {
     @Location("/edit")
-    data class Edit(val type: Type)
+    public data class Edit(val type: Type)
 
     @Location("/list/{page}")
-    data class List(val type: Type, val page: Int)
+    public data class List(val type: Type, val page: Int)
 }
 
-class AuthenticationException : RuntimeException()
-class AuthorizationException : RuntimeException()
+public class AuthenticationException : RuntimeException()
+public class AuthorizationException : RuntimeException()
 
 private val algorithm = Algorithm.HMAC256("secret")
 private fun makeJwtVerifier(issuer: String, audience: String): JWTVerifier = JWT
