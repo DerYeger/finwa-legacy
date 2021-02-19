@@ -1,4 +1,4 @@
-package eu.yeger
+package eu.yeger.finwa
 
 import io.kotest.matchers.shouldBe
 import io.ktor.http.*
