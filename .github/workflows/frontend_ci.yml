@@ -1,0 +1,74 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [master, develop, feature/*, renovate/*, release/*]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend_ci.yml"
+  pull_request:
+    branches: [master, develop, feature/*, renovate/*, release/*]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend_ci.yml"
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Cache node modules
+        id: node-cache
+        uses: actions/cache@v2
+        with:
+          path: ./frontend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('./frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install Dependencies
+        if: steps.node-cache.outputs.cache-hit != 'true'
+        run: npm install
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build -- --prod
+      - name: Test
+        run: npm test
+      - name: E2E
+        run: |
+          npx webdriver-manager update --versions.chrome=87.0.4280.88
+          npm run e2e:ci
+      - name: Upload artifact
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: finwa-frontend-artifact
+          path: ./frontend/dist/finwa-frontend/
+          if-no-files-found: error
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: finwa-frontend-artifact
+    - name: Create 404 file
+      run: cp index.html 404.html
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@4.0.0
+      with:
+        branch: gh-pages
+        folder: .
+        clean: true
