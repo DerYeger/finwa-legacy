@@ -66,15 +66,16 @@ dependencies {
 
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-        kotlinOptions.useIR = true
         // Format the code before compilation
         dependsOn(ktlintFormat)
     }
 
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-        kotlinOptions.useIR = true
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.apply {
+            jvmTarget = "1.8"
+            useIR = true
+            freeCompilerArgs = freeCompilerArgs + "-Xuse-experimental=io.ktor.locations.KtorExperimentalLocationsAPI"
+        }
     }
 
     ktlintFormat {
