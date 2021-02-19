@@ -15,9 +15,6 @@ on:
 defaults:
   run:
     working-directory: frontend
-    
-env:
-  do_deploy: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
 
 jobs:
   build:
@@ -52,7 +49,7 @@ jobs:
           npx webdriver-manager update --versions.chrome=87.0.4280.88
           npm run e2e:ci
       - name: Upload artifact
-        if: env.do_deploy == 'true'
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         uses: actions/upload-artifact@v2
         with:
           name: finwa-frontend-artifact
@@ -61,7 +58,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: env.do_deploy == 'true'
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     steps:
     - name: Download artifact
       uses: actions/download-artifact@v2
