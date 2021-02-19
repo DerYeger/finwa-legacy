@@ -56,6 +56,7 @@ jobs:
           path: ./frontend/dist/finwa-frontend/
           if-no-files-found: error
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
