@@ -1,27 +1,29 @@
 package eu.yeger.finwa
 
-import com.auth0.jwt.JWT
-import com.auth0.jwt.JWTVerifier
-import com.auth0.jwt.algorithms.Algorithm
+import eu.yeger.finwa.auth.authModule
+import eu.yeger.finwa.locations.locationsModule
+import eu.yeger.finwa.monitoring.monitoringModule
+import eu.yeger.finwa.routing.routingModule
 import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.auth.jwt.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.locations.*
-import io.ktor.metrics.micrometer.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
-import io.micrometer.prometheus.*
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.json.Json
 import org.slf4j.event.*
-import java.util.*
 
 public fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
 public fun Application.mainModule() {
+    authModule()
+    monitoringModule()
+    locationsModule()
+    routingModule()
 
     install(CallLogging) {
         level = Level.INFO
@@ -34,128 +36,29 @@ public fun Application.mainModule() {
         method(HttpMethod.Delete)
         method(HttpMethod.Patch)
         header(HttpHeaders.Authorization)
-        header("MyCustomHeader")
-        allowCredentials = true
-        anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
+        anyHost()
+        allowNonSimpleContentTypes = true
+        allowSameOrigin = true
     }
-    install(DefaultHeaders) {
-        header("X-Engine", "Ktor") // will send this header with each response
-    }
-    install(Locations) {
-    }
+
+    install(DefaultHeaders)
 
     install(ContentNegotiation) {
-        json()
+        json(
+            json = Json {
+                encodeDefaults = false
+                ignoreUnknownKeys = true
+            }
+        )
     }
 
-    val appMicrometerRegistry = PrometheusMeterRegistry(PrometheusConfig.DEFAULT)
-
-    install(MicrometerMetrics) {
-        registry = appMicrometerRegistry
-    }
-    authentication {
-        basic(name = "myauth1") {
-            realm = "Ktor Server"
-            validate { credentials ->
-                if (credentials.name == credentials.password) {
-                    UserIdPrincipal(credentials.name)
-                } else {
-                    null
-                }
-            }
+    install(StatusPages) {
+        exception<Throwable> { cause ->
+            call.respond(HttpStatusCode.InternalServerError, cause.message ?: "api.error.unknown")
+            throw cause
         }
-
-        form(name = "myauth2") {
-            userParamName = "user"
-            passwordParamName = "password"
-            challenge {
-                /**/
-            }
-        }
-    }
-    val jwtIssuer = Arguments.domain
-    val jwtAudience = "finwa"
-    val jwtRealm = "FinWa Server"
-    authentication {
-        jwt {
-            realm = jwtRealm
-            verifier(makeJwtVerifier(jwtIssuer, jwtAudience))
-            validate { credential ->
-                if (credential.payload.audience.contains(jwtAudience)) JWTPrincipal(credential.payload) else null
-            }
-        }
-    }
-    routing {
-        get("/") {
-            call.respondText("Hello World!")
-        }
-    }
-    routing {
-        get<MyLocation> {
-            call.respondText("Location: name=${it.name}, arg1=${it.arg1}, arg2=${it.arg2}")
-        }
-        // Register nested routes
-        get<Type.Edit> {
-            call.respondText("Inside $it")
-        }
-        get<Type.List> {
-            call.respondText("Inside $it")
-        }
-    }
-    routing {
-        install(StatusPages) {
-            exception<AuthenticationException> { cause ->
-                call.respond(HttpStatusCode.Unauthorized)
-            }
-            exception<AuthorizationException> { cause ->
-                call.respond(HttpStatusCode.Forbidden)
-            }
-        }
-    }
-    routing {
-        get("/json/kotlinx-serialization") {
-            call.respond(mapOf("hello" to "world"))
-        }
-    }
-    routing {
-        get("/metrics-micrometer") {
-            call.respond(appMicrometerRegistry.scrape())
-        }
-    }
-    routing {
-        authenticate("myauth1") {
-            get("/protected/route/basic") {
-                val principal = call.principal<UserIdPrincipal>()!!
-                call.respondText("Hello ${principal.name}")
-            }
-        }
-        authenticate("myauth1") {
-            get("/protected/route/form") {
-                val principal = call.principal<UserIdPrincipal>()!!
-                call.respondText("Hello ${principal.name}")
-            }
+        exception<SerializationException> { cause ->
+            call.respond(HttpStatusCode.BadRequest, cause.message ?: "api.error.serialization")
         }
     }
 }
-
-@Location("/location/{name}")
-public class MyLocation(public val name: String, public val arg1: Int = 42, public val arg2: String = "default")
-
-@Location("/type/{name}")
-public data class Type(val name: String) {
-    @Location("/edit")
-    public data class Edit(val type: Type)
-
-    @Location("/list/{page}")
-    public data class List(val type: Type, val page: Int)
-}
-
-public class AuthenticationException : RuntimeException()
-public class AuthorizationException : RuntimeException()
-
-private val algorithm = Algorithm.HMAC256(UUID.randomUUID().toString())
-private fun makeJwtVerifier(issuer: String, audience: String): JWTVerifier = JWT
-    .require(algorithm)
-    .withAudience(audience)
-    .withIssuer(issuer)
-    .build()
