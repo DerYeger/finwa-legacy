@@ -5,15 +5,16 @@ on:
     branches: [master, develop, feature/*, renovate/*, release/*]
     paths:
       - "frontend/**"
+      - ".github/workflows/frontend_ci.yml"
   pull_request:
     branches: [master, develop, feature/*, renovate/*, release/*]
     paths:
       - "frontend/**"
+      - ".github/workflows/frontend_ci.yml"
 
 defaults:
   run:
     working-directory: frontend
-
 
 jobs:
   build:
@@ -30,7 +31,6 @@ jobs:
         id: node-cache
         uses: actions/cache@v2
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ./frontend/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('./frontend/package-lock.json') }}
           restore-keys: |
