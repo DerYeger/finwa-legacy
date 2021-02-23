@@ -46,3 +46,21 @@ jobs:
         run: |
           rm -f ./.gradle/caches/modules-2/modules-2.lock
           rm -f ./.gradle/caches/modules-2/gc.properties
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Publish to Registry
+        id: docker_publish
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: deryeger/finwa-backend
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          context: ./backend
+      - name: Image digest
+        run: echo ${{ steps.docker_publish.outputs.digest }}
