@@ -1,9 +1,11 @@
 @import "~@angular/material/theming";
 @import "variables";
+@import "src/app/pages/main/main.page";
+
 @include mat-core();
 
 @mixin component-themes($theme) {
-  // Add components themes here
+  @include repository-theme($theme);
 }
 
 .light-theme {
