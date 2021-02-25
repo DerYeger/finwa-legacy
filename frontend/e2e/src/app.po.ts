@@ -1,11 +1,15 @@
-import { browser, by, element } from 'protractor';
+import { browser, promise } from 'protractor';
 
 export class AppPage {
-  async navigateTo(): Promise<unknown> {
+  public async navigateTo(): Promise<unknown> {
     return browser.get(browser.baseUrl);
   }
 
-  async getTitleText(): Promise<string> {
-    return element(by.css('finwa-root .content span')).getText();
+  public getTitle(): promise.Promise<string> {
+    return browser.getTitle();
+  }
+
+  public getUrl(): promise.Promise<string> {
+    return browser.getCurrentUrl();
   }
 }

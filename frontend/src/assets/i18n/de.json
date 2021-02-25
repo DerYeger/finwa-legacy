@@ -1,0 +1,18 @@
+{
+  "actions.login": "Anmelden",
+  "actions.logout": "Abmelden",
+  "api.error.unknown": "Ein unbekannter Fehler ist aufgetreten.",
+  "app.title": "FinWa",
+  "home.title": "Home",
+  "lang.de": "Deutsch",
+  "lang.en": "Englisch",
+  "login.error.credentials": "Anmeldedaten sind nicht korrekt.",
+  "login.password": "Passwort",
+  "login.username": "Benutzername",
+  "main.github-repository": "GitHub Repository",
+  "setup.error.test-failed": "Es wurde kein FinWa-Server unter dieser Adresse gefunden.",
+  "setup.host": "Host",
+  "setup.next": "Weiter",
+  "setup.port": "Port",
+  "setup.protocol": "Protokoll"
+}

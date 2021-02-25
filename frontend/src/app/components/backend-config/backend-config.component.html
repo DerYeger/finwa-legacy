@@ -1,0 +1,30 @@
+<form>
+  <div class="form-fields">
+    <mat-form-field [formGroup]="formGroup">
+      <mat-label>{{ "setup.protocol" | translate }}</mat-label>
+      <mat-select [formControlName]="'protocol'">
+        <mat-option *ngFor="let protocol of protocolOptions" [value]="protocol"> {{ protocol }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span class="separator">://</span>
+    <mat-form-field [formGroup]="formGroup">
+      <mat-label>{{ "setup.host" | translate }}</mat-label>
+      <input matInput [formControlName]="'host'" placeholder="your.domain.org" autocomplete="off" />
+    </mat-form-field>
+    <span class="separator">:</span>
+    <mat-form-field [formGroup]="formGroup">
+      <mat-label>{{ "setup.port" | translate }}</mat-label>
+      <input matInput [formControlName]="'port'" placeholder="8080" autocomplete="off" type="number" />
+    </mat-form-field>
+  </div>
+  <div class="button-container">
+    <button mat-raised-button (click)="testBackendConfiguration()" color="primary" [disabled]="formGroup.invalid">{{ "setup.next" | translate }}</button>
+  </div>
+</form>
+<finwa-http-progress-bar
+  class="progress-bar"
+  [requests]="requests$"
+  [displayErrors]="false"
+  (responseReceived)="onResponseReceived($event)"
+  (errorOccurred)="onErrorOccurred()"
+></finwa-http-progress-bar>
