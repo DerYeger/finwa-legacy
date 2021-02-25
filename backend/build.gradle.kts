@@ -1,9 +1,12 @@
 val arkenvVersion: String by project
 val jacocoVersion: String by project
+val jbcryptVersion: String by project
 val jUnitVersion: String by project
+val kmongoVersion: String by project
 val koinVersion: String by project
 val kotestVersion: String by project
 val kotlinVersion: String by project
+val kotlinLoggingVersion: String by project
 val kotlinResultVersion: String by project
 val ktorVersion: String by project
 val logbackVersion: String by project
@@ -15,6 +18,7 @@ plugins {
     kotlin("plugin.serialization")
     id("org.jetbrains.dokka")
     id("org.jlleitschuh.gradle.ktlint")
+    id("com.sourcemuse.mongo")
     id("com.github.johnrengelman.shadow")
     jacoco
 }
@@ -39,6 +43,9 @@ repositories {
 }
 
 dependencies {
+    // Kotlin
+    implementation(kotlin("stdlib-jdk8"))
+
     // Ktor
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-auth:$ktorVersion")
@@ -51,10 +58,15 @@ dependencies {
 
     // Logging & Monitoring
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
+    implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
     implementation("io.micrometer:micrometer-registry-prometheus:$prometheusVersion")
 
     // Other
     implementation("com.apurebase:arkenv:$arkenvVersion")
+    implementation("com.michael-bull.kotlin-result:kotlin-result:$kotlinResultVersion")
+    implementation("org.koin:koin-ktor:$koinVersion")
+    implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
+    implementation("org.mindrot:jbcrypt:$jbcryptVersion")
 
     // Testing
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jUnitVersion")
@@ -86,9 +98,13 @@ tasks {
     }
 
     withType<Test> {
+        dependsOn(startManagedMongoDb)
         useJUnitPlatform()
         environment(
-            "DOMAIN" to "example.org"
+            "DOMAIN" to "example.org",
+            "DATABASE_HOST" to "localhost",
+            "DATABASE_PORT" to "27017",
+            "DATABASE_NAME" to "finwa"
         )
     }
 
@@ -119,4 +135,9 @@ tasks {
 
 jacoco {
     toolVersion = jacocoVersion
+}
+
+mongo {
+    auth = false
+    logging = "none"
 }

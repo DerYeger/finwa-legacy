@@ -8,9 +8,15 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', async () => {
+  it('should have the correct title', async () => {
     await page.navigateTo();
-    expect(await page.getTitleText()).toEqual('finwa app is running!');
+    expect(await page.getTitle()).toEqual('FinWa');
+  });
+
+  it('should navigate to setup', async () => {
+    await page.navigateTo();
+    const url: string = await page.getUrl();
+    expect(url.endsWith('/setup')).toBeTruthy();
   });
 
   afterEach(async () => {

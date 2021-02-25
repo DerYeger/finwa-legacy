@@ -1,4 +1,8 @@
-# Finwa
+# FinWa-Frontend
+
+[![Frontend CI](https://github.com/DerYeger/finwa/actions/workflows/frontend_ci.yml/badge.svg?branch=develop&event=push)](https://github.com/DerYeger/finwa/actions/workflows/frontend_ci.yml)
+
+The frontend of the FinWa application.
 
 ## Development
 
