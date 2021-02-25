@@ -1,23 +1,2 @@
-<form>
-  <div>
-    <mat-form-field [formGroup]="formGroup">
-      <mat-label>{{ "setup.protocol" | translate }}</mat-label>
-      <mat-select [formControlName]="'protocol'">
-        <mat-option *ngFor="let protocol of protocolOptions" [value]="protocol"> {{ protocol }} </mat-option>
-      </mat-select>
-    </mat-form-field>
-    ://
-    <mat-form-field [formGroup]="formGroup">
-      <mat-label>{{ 'setup.host' | translate }}</mat-label>
-      <input matInput [formControlName]="'host'" placeholder="your.domain.org" autocomplete="off" />
-    </mat-form-field>
-    :
-    <mat-form-field [formGroup]="formGroup">
-      <mat-label>{{ 'setup.port' | translate }}</mat-label>
-      <input matInput [formControlName]="'port'" placeholder="8080" autocomplete="off" type="number" />
-    </mat-form-field>
-  </div>
-  <div class="button-container">
-    <button mat-raised-button (click)="testBackendConfiguration()" color="primary" [disabled]="formGroup.invalid">{{ 'setup.next' | translate }}</button>
-  </div>
-</form>
+<finwa-backend-config *ngIf="!(backendConfigured$ | async)"></finwa-backend-config>
+<finwa-login *ngIf="backendConfigured$ | async"></finwa-login>

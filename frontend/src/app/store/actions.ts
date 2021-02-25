@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Language } from './state'; // Settings
+import { Language } from './state';
+import { ApiToken } from '../model/api/api-token'; // Settings
 
 // Settings
 
@@ -20,10 +21,10 @@ export const toggleTheme = createAction('[settings.theme] toggle');
 
 // Authentication
 
-export const setUrl = createAction('[backendConfig.url] set', props<{ url: string }>());
+export const setBackendUrl = createAction('[backendConfig.url] set', props<{ url: string }>());
 
-export const setPort = createAction('[backendConfig.port] set', props<{ port: number }>());
+export const unsetBackendUrl = createAction('[backendConfig.url] unset');
 
-export const setJWT = createAction('[backendConfig.jwt] set', props<{ jwt: string }>());
+export const setApiToken = createAction('[backendConfig.apiToken] set', props<{ apiToken: ApiToken }>());
 
 export const logout = createAction('[backendConfig] logout');

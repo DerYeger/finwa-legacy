@@ -1,6 +1,6 @@
 import { ActionReducerMap, createReducer, MetaReducer, on } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
-import { logout, setJWT, setLanguage, setPort, setUrl, toggleSidebar, toggleTheme } from './actions';
+import { logout, unsetBackendUrl, setApiToken, setBackendUrl, setLanguage, toggleSidebar, toggleTheme } from './actions';
 import { BackendConfig, Settings, State } from './state';
 
 /**
@@ -14,10 +14,10 @@ export const reducers: ActionReducerMap<State> = {
     on(toggleTheme, (state) => ({ ...state, theme: state.theme === 'dark-theme' ? 'light-theme' : 'dark-theme' }))
   ),
   backendConfig: createReducer<BackendConfig>(
-    { url: undefined, port: 8080, jwt: undefined },
-    on(setUrl, (state, { url }) => ({ ...state, url })),
-    on(setPort, (state, { port }) => ({ ...state, port })),
-    on(setJWT, (state, { jwt }) => ({ ...state, jwt })),
+    { url: undefined, apiToken: undefined },
+    on(setBackendUrl, (state, { url }) => ({ ...state, url })),
+    on(unsetBackendUrl, (state) => ({ ...state, url: undefined })),
+    on(setApiToken, (state, { apiToken }) => ({ ...state, apiToken })),
     on(logout, (state) => ({ ...state, jwt: undefined }))
   ),
 };

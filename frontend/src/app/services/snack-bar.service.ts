@@ -3,7 +3,7 @@ import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material
 import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
 import { forkJoin, Observable, of } from 'rxjs';
-import { TranslationDTO } from '../model/api/translation.dto';
+import { TranslationDTO } from '../model/api/translation-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class SnackBarService {
     const message$: Observable<string> = this.translate.get(translationDTO.key, translationDTO.params);
     const action$: Observable<string | undefined> = actionDTO ? this.translate.get(actionDTO.key, actionDTO.params) : of(undefined);
     const [message, action] = await forkJoin([message$, action$]).toPromise();
-    this.log.debug(`Openend SnackBar - Message: ${message} - Action: ${action}`);
+    this.log.debug(`Opened SnackBar - Message: ${message} - Action: ${action}`);
     return this.snackBar.open(message, action, { duration });
   }
 }

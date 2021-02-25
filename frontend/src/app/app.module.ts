@@ -13,9 +13,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomePage } from './pages/home/home.page';
 import { MainPage } from './pages/main/main.page';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BackendConfigComponent } from './components/backend-config/backend-config.component';
+import { LoginComponent } from './components/login/login.component';
+import { HttpProgressBarComponent } from './components/http-progress-bar/http-progress-bar.component';
 
 @NgModule({
-  declarations: [AppComponent, SetupPage, HomePage, MainPage],
+  declarations: [AppComponent, SetupPage, HomePage, MainPage, BackendConfigComponent, LoginComponent, HttpProgressBarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

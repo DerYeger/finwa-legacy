@@ -2,7 +2,7 @@
   "setup.protocol": "Protocol",
   "setup.host": "Host",
   "setup.port": "Port",
-  "setup.error.test-failed": "No FinWa-Backend detected at {{url}}.",
+  "setup.error.test-failed": "No FinWa-Backend detected at the given address.",
   "setup.next": "Next",
   "app.title": "FinWa",
   "actions.logout": "Logout",

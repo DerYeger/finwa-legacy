@@ -1,6 +1,8 @@
 /**
  * The state of this app.
  */
+import { ApiToken } from '../model/api/api-token';
+
 export interface State {
   settings: Settings;
   backendConfig: BackendConfig;
@@ -26,7 +28,6 @@ export interface Settings {
 }
 
 export interface BackendConfig {
-  url: string | undefined;
-  port: number;
-  jwt: string | undefined;
+  url?: string;
+  apiToken?: ApiToken;
 }

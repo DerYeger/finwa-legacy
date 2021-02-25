@@ -1,0 +1,15 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.back-button {
+  cursor: pointer;
+  margin-bottom: 17.5px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
