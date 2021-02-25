@@ -9,6 +9,6 @@ public fun User.withHashedPassword(): User {
 }
 
 public infix fun Credentials.matches(user: User): Boolean {
-    return this.name == user.name &&
+    return this.username == user.name &&
         BCrypt.checkpw(this.password, user.password)
 }

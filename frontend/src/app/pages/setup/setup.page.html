@@ -1,2 +1,2 @@
-<finwa-backend-config *ngIf="!(backendConfigured$ | async)"></finwa-backend-config>
+<finwa-backend-config *ngIf="(backendConfigured$ | async) === false"></finwa-backend-config>
 <finwa-login *ngIf="backendConfigured$ | async"></finwa-login>

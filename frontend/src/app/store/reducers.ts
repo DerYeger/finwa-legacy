@@ -18,7 +18,7 @@ export const reducers: ActionReducerMap<State> = {
     on(setBackendUrl, (state, { url }) => ({ ...state, url })),
     on(unsetBackendUrl, (state) => ({ ...state, url: undefined })),
     on(setApiToken, (state, { apiToken }) => ({ ...state, apiToken })),
-    on(logout, (state) => ({ ...state, jwt: undefined }))
+    on(logout, (state) => ({ ...state, apiToken: undefined }))
   ),
 };
 

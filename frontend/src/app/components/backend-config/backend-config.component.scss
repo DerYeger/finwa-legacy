@@ -1,7 +1,17 @@
-.button-container {
+form {
+  margin: 2rem;
+}
+
+.form-fields {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.separator {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 // From https://stackoverflow.com/questions/3790935/can-i-hide-the-html5-number-input-s-spin-box
@@ -14,4 +24,18 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.progress-bar {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  width: calc(100% - 2rem);
 }

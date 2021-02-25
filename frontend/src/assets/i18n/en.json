@@ -1,13 +1,18 @@
 {
-  "setup.protocol": "Protocol",
-  "setup.host": "Host",
-  "setup.port": "Port",
-  "setup.error.test-failed": "No FinWa-Backend detected at the given address.",
-  "setup.next": "Next",
-  "app.title": "FinWa",
+  "actions.login": "Login",
   "actions.logout": "Logout",
-  "lang.en": "English",
+  "app.title": "FinWa",
+  "api.error.unknown": "An unknown error occurred.",
+  "home.title": "Home",
   "lang.de": "German",
-  "dashboard.github-repository": "GitHub Repository",
-  "home.title": "Home"
+  "lang.en": "English",
+  "login.error.credentials": "Incorrect login credentials.",
+  "login.password": "Password",
+  "login.username": "Username",
+  "main.github-repository": "GitHub Repository",
+  "setup.error.test-failed": "No FinWa-Backend detected at the given address.",
+  "setup.host": "Host",
+  "setup.next": "Next",
+  "setup.port": "Port",
+  "setup.protocol": "Protocol"
 }

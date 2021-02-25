@@ -1,6 +1,15 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 form {
   display: flex;
   flex-direction: column;
+  min-width: 33%;
+  margin: 2rem;
 }
 
 .back-button {
@@ -12,4 +21,12 @@ form {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.progress-bar {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  width: calc(100% - 2rem);
 }

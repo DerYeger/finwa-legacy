@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LoggerTestingModule } from 'ngx-logger/testing';
+import { HttpProgressBarComponent } from '../http-progress-bar/http-progress-bar.component';
 
 describe('BackendConfigComponent', () => {
   let component: BackendConfigComponent;
@@ -16,7 +17,7 @@ describe('BackendConfigComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BackendConfigComponent],
+      declarations: [BackendConfigComponent, HttpProgressBarComponent],
       imports: [
         MaterialModule,
         StoreModule.forRoot(reducers, undefined),

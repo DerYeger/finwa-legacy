@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 import { catchError, map } from 'rxjs/operators';
@@ -12,7 +12,19 @@ type State = 'sending' | 'querying' | 'fetching';
   templateUrl: './http-progress-bar.component.html',
   styleUrls: ['./http-progress-bar.component.scss'],
 })
-export class HttpProgressBarComponent<T> implements OnInit {
+export class HttpProgressBarComponent<T> implements OnInit, OnDestroy {
+  @Input()
+  public requests!: Observable<Observable<HttpEvent<T>>>;
+
+  @Input()
+  public displayErrors = true;
+
+  @Output()
+  public readonly responseReceived = new EventEmitter<T | null>();
+
+  @Output()
+  public readonly errorOccurred = new EventEmitter<void>();
+
   public readonly progress$ = new EventEmitter<number>();
 
   public readonly state$ = new EventEmitter<State>();
@@ -31,18 +43,6 @@ export class HttpProgressBarComponent<T> implements OnInit {
       }
     })
   );
-
-  @Output()
-  public readonly responseReceived = new EventEmitter<T | null>();
-
-  @Output()
-  public readonly errorOccurred = new EventEmitter<void>();
-
-  @Input()
-  public requests!: Observable<Observable<HttpEvent<T>>>;
-
-  @Input()
-  public displayErrors: boolean = true;
 
   private requestsSubscription?: Subscription;
   private requestSubscription?: Subscription;
@@ -100,7 +100,9 @@ export class HttpProgressBarComponent<T> implements OnInit {
   private onError(error: any): Observable<HttpEvent<T>> {
     this.visible$.emit(false);
     this.errorOccurred.emit();
-    if (!this.displayErrors) return of();
+    if (!this.displayErrors) {
+      return of();
+    }
     const message = error?.error?.message ?? 'api.error.unknown';
     if (typeof message === 'string') {
       this.snackBarService.openSnackBar({ key: message }, undefined, 10000);

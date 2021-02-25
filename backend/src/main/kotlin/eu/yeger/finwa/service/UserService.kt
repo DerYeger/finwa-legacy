@@ -14,7 +14,7 @@ import eu.yeger.finwa.repository.UserRepository
 import io.ktor.http.*
 import mu.KotlinLogging
 
-private val loginFailed: ResponseEntity<TranslationDTO> = unauthorized(TranslationDTO("login.failed"))
+private val loginFailed: ResponseEntity<TranslationDTO> = unauthorized(TranslationDTO("login.error.credentials"))
 
 public class UserService(
     private val userRepository: UserRepository
@@ -33,7 +33,7 @@ public class UserService(
 
     public suspend fun loginUser(credentials: Credentials): ApiResult<ResponseEntity<ApiToken>> {
         return userRepository
-            .validateUserExists(credentials.name)
+            .validateUserExists(credentials.username)
             .map(PersistentUser::toUser)
             .andThen { user -> credentials.validateForUser(user) }
             .map { user -> JWTConfiguration.makeToken(user) }

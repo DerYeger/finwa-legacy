@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { logout, setLanguage, toggleSidebar, toggleTheme } from 'src/app/store/actions';
 import { State } from '../../store/state';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 interface NamedRoute {
   name: string;
@@ -23,9 +23,20 @@ export class MainPage {
     },
   ];
 
-  public readonly language$ = this.store.select('settings').pipe(map((settings) => settings.language));
-  public readonly sidebar$ = this.store.select('settings').pipe(map((settings) => settings.sidebar));
-  public readonly themeButtonIcon$ = this.store.select('settings').pipe(map((settings) => (settings.theme === 'dark-theme' ? 'light_mode' : 'dark_mode')));
+  public readonly language$ = this.store.select('settings').pipe(
+    map((settings) => settings.language),
+    distinctUntilChanged()
+  );
+
+  public readonly sidebar$ = this.store.select('settings').pipe(
+    map((settings) => settings.sidebar),
+    distinctUntilChanged()
+  );
+
+  public readonly themeButtonIcon$ = this.store.select('settings').pipe(
+    map((settings) => (settings.theme === 'dark-theme' ? 'light_mode' : 'dark_mode')),
+    distinctUntilChanged()
+  );
 
   public constructor(private readonly store: Store<State>) {}
 
