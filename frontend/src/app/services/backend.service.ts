@@ -12,16 +12,16 @@ import { Credentials } from '../model/api/credentials';
   providedIn: 'root',
 })
 export class BackendService {
-  public readonly backendUrl$: Observable<string | undefined> = this.store.select('backendConfig').pipe(
-    map((backendConfig) => backendConfig.url),
+  public readonly backendUrl$: Observable<string | undefined> = this.store.select('settings').pipe(
+    map((settings) => settings.backendUrl),
     distinctUntilChanged()
   );
 
   public constructor(private readonly store: Store<State>, private readonly http: HttpClient) {}
 
   public isAuthenticated$(): Observable<boolean> {
-    return this.store.select('backendConfig').pipe(
-      map((backendConfig) => backendConfig.apiToken !== undefined),
+    return this.store.select('apiToken').pipe(
+      map((apiToken) => apiToken !== undefined),
       distinctUntilChanged()
     );
   }

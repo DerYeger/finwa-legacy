@@ -5,7 +5,7 @@ import { State } from '../../store/state';
 import { Router } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { SnackBarService } from '../../services/snack-bar.service';
-import { setApiToken, unsetBackendUrl } from '../../store/actions';
+import { login, unsetBackendUrl } from '../../store/actions';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { Credentials } from '../../model/api/credentials';
@@ -49,7 +49,7 @@ export class LoginComponent {
     if (apiToken === null) {
       this.snackBarService.openSnackBar({ key: 'api.error.unknown' });
     } else {
-      this.store.dispatch(setApiToken({ apiToken }));
+      this.store.dispatch(login({ apiToken }));
     }
   }
 }

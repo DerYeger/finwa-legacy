@@ -5,7 +5,7 @@ import { ApiToken } from '../model/api/api-token';
 
 export interface State {
   settings: Settings;
-  backendConfig: BackendConfig;
+  apiToken?: ApiToken;
 }
 
 /**
@@ -22,12 +22,8 @@ export type Theme = 'dark-theme' | 'light-theme';
  * The settings of this app.
  */
 export interface Settings {
+  backendUrl?: string;
   language?: Language;
   sidebar: boolean;
   theme: Theme;
-}
-
-export interface BackendConfig {
-  url?: string;
-  apiToken?: ApiToken;
 }

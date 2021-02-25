@@ -10,6 +10,7 @@ import { MaterialModule } from '../../material/material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoggerTestingModule } from 'ngx-logger/testing';
 import { HttpProgressBarComponent } from '../../components/http-progress-bar/http-progress-bar.component';
+import { BackendConfigComponent } from '../../components/backend-config/backend-config.component';
 
 describe('SetupPage', () => {
   let component: SetupPage;
@@ -17,7 +18,7 @@ describe('SetupPage', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SetupPage, HttpProgressBarComponent],
+      declarations: [SetupPage, BackendConfigComponent, HttpProgressBarComponent],
       imports: [
         MaterialModule,
         StoreModule.forRoot(reducers, undefined),

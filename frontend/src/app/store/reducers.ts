@@ -1,24 +1,25 @@
 import { ActionReducerMap, createReducer, MetaReducer, on } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
-import { logout, unsetBackendUrl, setApiToken, setBackendUrl, setLanguage, toggleSidebar, toggleTheme } from './actions';
-import { BackendConfig, Settings, State } from './state';
+import { login, logout, setBackendUrl, setLanguage, toggleSidebar, toggleTheme, unsetBackendUrl } from './actions';
+import { Settings, State } from './state';
+import { ApiToken } from '../model/api/api-token';
 
 /**
  * Reducers for the app-state.
  */
 export const reducers: ActionReducerMap<State> = {
   settings: createReducer<Settings>(
-    { language: undefined, sidebar: true, theme: 'dark-theme' },
+    { backendUrl: undefined, language: undefined, sidebar: true, theme: 'dark-theme' },
+    on(setBackendUrl, (state, { backendUrl }) => ({ ...state, backendUrl })),
+    on(unsetBackendUrl, (state) => ({ ...state, backendUrl: undefined })),
     on(setLanguage, (state, { language }) => ({ ...state, language })),
     on(toggleSidebar, (state) => ({ ...state, sidebar: !state.sidebar })),
     on(toggleTheme, (state) => ({ ...state, theme: state.theme === 'dark-theme' ? 'light-theme' : 'dark-theme' }))
   ),
-  backendConfig: createReducer<BackendConfig>(
-    { url: undefined, apiToken: undefined },
-    on(setBackendUrl, (state, { url }) => ({ ...state, url })),
-    on(unsetBackendUrl, (state) => ({ ...state, url: undefined })),
-    on(setApiToken, (state, { apiToken }) => ({ ...state, apiToken })),
-    on(logout, (state) => ({ ...state, apiToken: undefined }))
+  apiToken: createReducer<ApiToken | undefined>(
+    undefined,
+    on(login, (state, { apiToken }) => apiToken),
+    on(logout, () => undefined)
   ),
 };
 

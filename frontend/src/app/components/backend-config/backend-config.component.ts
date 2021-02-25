@@ -59,7 +59,7 @@ export class BackendConfigComponent {
 
   public onResponseReceived(response: HeartbeatResponse | null): void {
     if (response !== null && response.message === 'FinWa-Backend') {
-      this.store.dispatch(setBackendUrl({ url: response.url }));
+      this.store.dispatch(setBackendUrl({ backendUrl: response.url }));
     } else {
       this.onErrorOccurred();
     }

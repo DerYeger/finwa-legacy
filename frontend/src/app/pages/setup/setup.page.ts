@@ -20,9 +20,8 @@ export class SetupPage implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.tokenSubscription = this.store
-      .select('backendConfig')
+      .select('apiToken')
       .pipe(
-        map((backendConfig) => backendConfig.apiToken),
         distinctUntilChanged(),
         filter((apiToken) => apiToken !== undefined)
       )

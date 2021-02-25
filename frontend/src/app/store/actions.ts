@@ -1,8 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { Language } from './state';
-import { ApiToken } from '../model/api/api-token'; // Settings
+import { ApiToken } from '../model/api/api-token';
 
 // Settings
+
+export const setBackendUrl = createAction('[settings.backendUrl] set', props<{ backendUrl: string | undefined }>());
+
+export const unsetBackendUrl = createAction('[settings.backendUrl] unset');
 
 /**
  * Sets the language to the given value.
@@ -21,10 +25,6 @@ export const toggleTheme = createAction('[settings.theme] toggle');
 
 // Authentication
 
-export const setBackendUrl = createAction('[backendConfig.url] set', props<{ url: string }>());
+export const login = createAction('[apiToken] login', props<{ apiToken: ApiToken }>());
 
-export const unsetBackendUrl = createAction('[backendConfig.url] unset');
-
-export const setApiToken = createAction('[backendConfig.apiToken] set', props<{ apiToken: ApiToken }>());
-
-export const logout = createAction('[backendConfig] logout');
+export const logout = createAction('[apiToken] logout');
