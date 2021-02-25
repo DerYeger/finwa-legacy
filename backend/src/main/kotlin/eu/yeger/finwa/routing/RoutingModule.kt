@@ -6,8 +6,11 @@ import io.ktor.routing.*
 
 public fun Application.routingModule() {
     routing {
-        get("/") {
-            call.respondText("Hello World!")
+        get("/heartbeat") {
+            call.respondText("FinWa-Backend")
+        }
+        route("/api") {
+            // TODO
         }
     }
 }
