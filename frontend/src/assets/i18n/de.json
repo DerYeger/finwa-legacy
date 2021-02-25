@@ -1,2 +1,13 @@
 {
+  "setup.port": "Port",
+  "setup.host": "Host",
+  "setup.protocol": "Protokoll",
+  "setup.error.test-failed": "Es wurde kein FinWa-Server unter {{url}} gefunden.",
+  "setup.next": "Weiter",
+  "app.title": "FinWa",
+  "actions.logout": "Abmelden",
+  "lang.de": "Deutsch",
+  "lang.en": "Englisch",
+  "dashboard.github-repository": "GitHub Repository",
+  "home.title": "Home"
 }

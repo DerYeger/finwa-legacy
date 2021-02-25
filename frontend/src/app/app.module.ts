@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { HomePage } from './pages/home/home.page';
 import { MainPage } from './pages/main/main.page';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, SetupPage, HomePage, MainPage],
@@ -20,6 +21,8 @@ import { MainPage } from './pages/main/main.page';
     AppRoutingModule,
     HttpClientModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
     TranslateModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers }),
     LoggerModule.forRoot({

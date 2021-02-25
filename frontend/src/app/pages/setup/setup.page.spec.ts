@@ -1,6 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SetupPage } from './setup.page';
+import { reducers } from '../../store/reducers';
+import { StoreModule } from '@ngrx/store';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MaterialModule } from '../../material/material.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { LoggerTestingModule } from 'ngx-logger/testing';
 
 describe('SetupPage', () => {
   let component: SetupPage;
@@ -9,6 +17,16 @@ describe('SetupPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SetupPage],
+      imports: [
+        MaterialModule,
+        StoreModule.forRoot(reducers, undefined),
+        TranslateModule.forRoot(),
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientTestingModule,
+        LoggerTestingModule,
+      ],
     }).compileComponents();
   });
 

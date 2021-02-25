@@ -19,6 +19,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTreeModule } from '@angular/material/tree';
@@ -44,6 +45,7 @@ const matModules = [
   MatSnackBarModule,
   MatSlideToggleModule,
   MatSortModule,
+  MatStepperModule,
   MatTableModule,
   MatToolbarModule,
   MatTooltipModule,

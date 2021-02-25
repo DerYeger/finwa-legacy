@@ -1,2 +1,13 @@
 {
+  "setup.protocol": "Protocol",
+  "setup.host": "Host",
+  "setup.port": "Port",
+  "setup.error.test-failed": "No FinWa-Backend detected at {{url}}.",
+  "setup.next": "Next",
+  "app.title": "FinWa",
+  "actions.logout": "Logout",
+  "lang.en": "English",
+  "lang.de": "German",
+  "dashboard.github-repository": "GitHub Repository",
+  "home.title": "Home"
 }
