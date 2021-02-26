@@ -18,6 +18,9 @@ public val databaseModule: Module = module {
             logger.info { "Incomplete database configuration, aborting connection" }
             return@single null
         }
+
+//        val mongoLogger: Logger = Logger.getLogger("org.mongodb.driver.cluster")
+//        mongoLogger.level = Level.SEVERE
         KMongo
             .createClient("mongodb://$host:$port")
             .coroutine
