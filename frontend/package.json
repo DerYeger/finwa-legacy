@@ -38,7 +38,7 @@
     "@ngx-translate/core": "13.0.0",
     "d3": "6.5.0",
     "ngrx-store-localstorage": "11.0.0",
-    "ngx-logger": "4.2.0",
+    "ngx-logger": "4.2.1",
     "rxjs": "6.6.3",
     "tslib": "2.1.0",
     "zone.js": "0.11.4"
