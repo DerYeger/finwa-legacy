@@ -3,6 +3,7 @@
 !src/**
 !.browserslistrc
 !angular.json
+!ngsw-config.json
 !package.json
 !package-lock.json
 !tsconfig.app.json

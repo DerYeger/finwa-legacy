@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BackendConfigComponent } from './components/backend-config/backend-config.component';
 import { LoginComponent } from './components/login/login.component';
 import { HttpProgressBarComponent } from './components/http-progress-bar/http-progress-bar.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent, SetupPage, HomePage, MainPage, BackendConfigComponent, LoginComponent, HttpProgressBarComponent],
@@ -38,6 +39,7 @@ import { HttpProgressBarComponent } from './components/http-progress-bar/http-pr
       colorScheme: DEFAULT_COLOR_SCHEME,
       httpResponseType: 'json',
     }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],
