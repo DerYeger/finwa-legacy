@@ -1,5 +1,15 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 form {
+  display: flex;
+  flex-direction: column;
   margin: 2rem;
+  min-width: calc(min(33%, 32rem));
 }
 
 .form-fields {
@@ -7,6 +17,14 @@ form {
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.protocol-input {
+  width: 4em;
+}
+
+.address-input {
+  flex-grow: 1;
 }
 
 .separator {
@@ -30,11 +48,12 @@ input[type="number"] {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  width: 100%;
 }
 
 .progress-bar {
   position: fixed;
-  bottom: 1rem;
+  top: 1rem;
   left: 1rem;
   right: 1rem;
   width: calc(100% - 2rem);
