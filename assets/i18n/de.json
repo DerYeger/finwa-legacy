@@ -10,9 +10,9 @@
   "login.password": "Passwort",
   "login.username": "Benutzername",
   "main.github-repository": "GitHub Repository",
+  "setup.address": "Adresse",
   "setup.error.test-failed": "Es wurde kein FinWa-Server unter dieser Adresse gefunden.",
-  "setup.host": "Host",
+  "setup.http-tooltip": "HTTP may not work in every environment and is considered insecure. Should only be used for testing.",
   "setup.next": "Weiter",
-  "setup.port": "Port",
   "setup.protocol": "Protokoll"
 }
