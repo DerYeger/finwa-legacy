@@ -48,7 +48,6 @@ public fun Application.mainModule() {
         }
         exception<SerializationException> { cause ->
             call.respond(HttpStatusCode.BadRequest, cause.message ?: "api.error.serialization")
-            throw cause
         }
     }
 }

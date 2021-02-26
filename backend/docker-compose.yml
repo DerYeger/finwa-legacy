@@ -7,3 +7,19 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+    env_file:
+      - ./docker/environments/domain.env
+      - ./docker/environments/finwa.env
+    depends_on:
+      - mongo
+    restart: unless-stopped
+    networks:
+      - finwa-network
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    networks:
+      - finwa-network
+
+networks:
+  finwa-network:
