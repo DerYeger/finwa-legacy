@@ -12,7 +12,7 @@
   "main.github-repository": "GitHub Repository",
   "setup.address": "Address",
   "setup.error.test-failed": "No FinWa-Backend detected at the given address.",
-  "setup.http-tooltip": "HTTP funktioniert nicht in jeder Umgebung und gilt als unsicher. Nur für Testzwecke empfohlen.",
+  "setup.http-tooltip": "HTTP may not work in every environment and is considered insecure. Should only be used for testing.",
   "setup.next": "Next",
   "setup.protocol": "Protocol"
 }
