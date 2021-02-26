@@ -10,19 +10,8 @@ import { Observable, Subject } from 'rxjs';
 import { setBackendUrl } from '../../store/actions';
 import { HeartbeatResponse } from '../../model/api/heartbeat-response';
 
-const ipAddressRegex = '^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]).){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$';
-const hostnameRegex = '^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$';
-const hostRegex = `${ipAddressRegex}|${hostnameRegex}`;
-
-const hostValidator = Validators.pattern(hostRegex);
-
-function portValidator(control: AbstractControl): ValidationErrors | null {
-  const value = control.value;
-  if (value < 1 || 65535 < value) {
-    return { portRange: true };
-  }
-  return null;
-}
+const hostRegex = '^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$';
+const addressValidator = Validators.pattern(hostRegex);
 
 @Component({
   selector: 'finwa-backend-config',
@@ -30,14 +19,11 @@ function portValidator(control: AbstractControl): ValidationErrors | null {
   styleUrls: ['./backend-config.component.scss'],
 })
 export class BackendConfigComponent {
-  public readonly protocolOptions = ['https', 'http'];
-
   public readonly requests$ = new EventEmitter<Observable<HttpEvent<HeartbeatResponse>>>();
 
   public readonly formGroup: FormGroup = this.formBuilder.group({
     protocol: ['https', Validators.required],
-    host: ['', [Validators.required, hostValidator]],
-    port: ['8080', [Validators.required, portValidator]],
+    address: ['', [Validators.required, addressValidator]],
   });
 
   public constructor(
@@ -50,9 +36,8 @@ export class BackendConfigComponent {
 
   public testBackendConfiguration(): void {
     const protocol = this.formGroup.controls.protocol.value;
-    const host = this.formGroup.controls.host.value;
-    const port = this.formGroup.controls.port.value;
-    const url = `${protocol}://${host}:${port}`;
+    const address = this.formGroup.controls.address.value;
+    const url = `${protocol}://${address}`;
     const request = this.backendService.verifyBackendHeartbeat$(url);
     this.requests$.next(request);
   }

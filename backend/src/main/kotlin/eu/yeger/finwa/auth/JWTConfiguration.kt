@@ -10,7 +10,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 public object JWTConfiguration {
-    private val issuer: String = Arguments.domain
+    private val issuer: String = Arguments.url
     public const val audience: String = "finwa"
 
     private val duration: Long = TimeUnit.DAYS.toMillis(30)

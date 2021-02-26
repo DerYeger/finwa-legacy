@@ -7,6 +7,7 @@ FinWa (**Fin**ance **Wa**tcher) is an application which helps keeping track of o
 It consists of two components
 - The frontend hosted on [GitHub Pages](https://finwa.yeger.eu).
 - A self-hosted backend, available on [DockerHub](https://hub.docker.com/repository/docker/deryeger/finwa-backend).
+The stack of the backend is available [here](https://github.com/DerYeger/finwa-stack).
 
 FinWa is currently in development.
 

@@ -1,20 +1,22 @@
 <form>
   <div class="form-fields">
-    <mat-form-field [formGroup]="formGroup">
+    <mat-form-field [formGroup]="formGroup" class="protocol-input">
       <mat-label>{{ "setup.protocol" | translate }}</mat-label>
       <mat-select [formControlName]="'protocol'">
-        <mat-option *ngFor="let protocol of protocolOptions" [value]="protocol"> {{ protocol }} </mat-option>
+        <mat-option [value]="'https'">https</mat-option>
+        <mat-option
+          [value]="'http'"
+          [matTooltip]="'setup.http-tooltip' | translate"
+          matTooltipPosition="left"
+          matTooltipShowDelay="250"
+          matTooltipHideDelay="250"
+        > http </mat-option>
       </mat-select>
     </mat-form-field>
     <span class="separator">://</span>
-    <mat-form-field [formGroup]="formGroup">
-      <mat-label>{{ "setup.host" | translate }}</mat-label>
-      <input matInput [formControlName]="'host'" placeholder="your.domain.org" autocomplete="off" />
-    </mat-form-field>
-    <span class="separator">:</span>
-    <mat-form-field [formGroup]="formGroup">
-      <mat-label>{{ "setup.port" | translate }}</mat-label>
-      <input matInput [formControlName]="'port'" placeholder="8080" autocomplete="off" type="number" />
+    <mat-form-field [formGroup]="formGroup"  class="address-input">
+      <mat-label>{{ "setup.address" | translate }}</mat-label>
+      <input matInput [formControlName]="'address'" placeholder="your.domain.org" autocomplete="off" />
     </mat-form-field>
   </div>
   <div class="button-container">
