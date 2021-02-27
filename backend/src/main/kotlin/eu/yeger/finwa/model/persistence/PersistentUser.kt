@@ -1,7 +1,9 @@
 package eu.yeger.finwa.model.persistence
 
 import eu.yeger.finwa.model.domain.User
+import kotlinx.serialization.Serializable
 
+@Serializable
 public data class PersistentUser(
     val name: String,
     val password: String

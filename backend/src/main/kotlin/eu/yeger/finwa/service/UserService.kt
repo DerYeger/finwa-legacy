@@ -25,9 +25,12 @@ public class UserService(
         val username = Arguments.defaultUsername
         val password = Arguments.defaultPassword
         if (userRepository.isEmpty()) {
+            logger.info { "No existing users" }
             val user = User(name = username, password = password).withHashedPassword().toPersistentUser()
             userRepository.save(user)
             logger.info { "Created default user" }
+        } else {
+            logger.info { "Found existing users" }
         }
     }
 

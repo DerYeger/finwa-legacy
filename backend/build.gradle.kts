@@ -65,7 +65,7 @@ dependencies {
     implementation("com.apurebase:arkenv:$arkenvVersion")
     implementation("com.michael-bull.kotlin-result:kotlin-result:$kotlinResultVersion")
     implementation("org.koin:koin-ktor:$koinVersion")
-    implementation("org.litote.kmongo:kmongo-coroutine:$kmongoVersion")
+    implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongoVersion")
     implementation("org.mindrot:jbcrypt:$jbcryptVersion")
 
     // Testing
@@ -85,7 +85,6 @@ tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.apply {
             jvmTarget = "1.8"
-            useIR = true
             freeCompilerArgs = freeCompilerArgs + "-Xuse-experimental=io.ktor.locations.KtorExperimentalLocationsAPI"
         }
     }
