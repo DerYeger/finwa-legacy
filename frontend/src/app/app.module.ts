@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { metaReducers, reducers } from './store/reducers';
 import { DEFAULT_COLOR_SCHEME, LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { environment } from '../environments/environment';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomePage } from './pages/home/home.page';
 import { MainPage } from './pages/main/main.page';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
 import { HttpProgressBarComponent } from './components/http-progress-bar/http-progress-bar.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UserManagementPage } from './pages/user-management/user-management.page';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [AppComponent, SetupPage, HomePage, MainPage, BackendConfigComponent, LoginComponent, HttpProgressBarComponent, UserManagementPage],
@@ -42,7 +43,13 @@ import { UserManagementPage } from './pages/user-management/user-management.page
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
