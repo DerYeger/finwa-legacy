@@ -6,7 +6,7 @@ import eu.yeger.finwa.utils.post
 import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
-public fun Routing.authRoutes() {
+public fun Route.authRoutes() {
     val userService: UserService by inject()
 
     post("login") { credentials: Credentials -> userService.loginUser(credentials) }
