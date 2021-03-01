@@ -89,6 +89,16 @@ tasks {
         }
     }
 
+    run.configure {
+        dependsOn(startManagedMongoDb)
+        environment(
+            "DOMAIN" to "localhost",
+            "DATABASE_HOST" to "localhost",
+            "DATABASE_PORT" to "27017",
+            "DATABASE_NAME" to "finwa-run"
+        )
+    }
+
     withType<Test> {
         dependsOn(startManagedMongoDb)
         useJUnitPlatform()
@@ -96,7 +106,7 @@ tasks {
             "DOMAIN" to "example.org",
             "DATABASE_HOST" to "localhost",
             "DATABASE_PORT" to "27017",
-            "DATABASE_NAME" to "finwa"
+            "DATABASE_NAME" to "finwa-test"
         )
     }
 

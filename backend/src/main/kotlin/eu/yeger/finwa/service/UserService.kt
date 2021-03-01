@@ -12,6 +12,7 @@ import eu.yeger.finwa.model.persistence.PersistentUser
 import eu.yeger.finwa.model.persistence.toUser
 import eu.yeger.finwa.repository.user.UserRepository
 import eu.yeger.finwa.utils.toResult
+import eu.yeger.finwa.utils.vanish
 import mu.KotlinLogging
 
 private val loginFailed: ResponseEntity<TranslationDTO> = unauthorized(TranslationDTO("login.error.credentials"))
@@ -32,6 +33,24 @@ public class UserService(
         return userRepository
             .validateUserWithIdExists(id)
             .map(PersistentUser::toUser)
+            .map(::ok)
+    }
+
+    public suspend fun create(user: User): ApiResult<User> {
+        return userRepository
+            .validateUserIdIsAvailable(user.id)
+            .andThen { userRepository.validateUserNameIsAvailable(user.name) }
+            .map { user.withHashedPassword() }
+            .onSuccess { hashedUser -> userRepository.save(hashedUser.toPersistentUser()) }
+            .map { hashedUser -> hashedUser.copy(password = "") }
+            .map(::created)
+    }
+
+    public suspend fun deleteById(id: String): ApiResult<Unit> {
+        return userRepository
+            .validateUserWithIdExists(id)
+            .onSuccess { user -> userRepository.deleteById(user.id) }
+            .vanish()
             .map(::ok)
     }
 

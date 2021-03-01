@@ -6,7 +6,6 @@ import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.serialization.*
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import org.slf4j.event.Level
 
@@ -46,8 +45,9 @@ public fun Application.mainModule() {
             call.respond(HttpStatusCode.InternalServerError, cause.message ?: "api.error.unknown")
             throw cause
         }
-        exception<SerializationException> { cause ->
-            call.respond(HttpStatusCode.BadRequest, cause.message ?: "api.error.serialization")
+
+        exception<BadRequestException> { cause ->
+            call.respond(HttpStatusCode.BadRequest, cause.message ?: "api.error.bad-request")
         }
     }
 }

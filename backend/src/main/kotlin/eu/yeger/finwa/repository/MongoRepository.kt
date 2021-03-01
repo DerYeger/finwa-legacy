@@ -21,4 +21,8 @@ public class MongoRepository<T : Entity>(private val entityCollection: Coroutine
     public override suspend fun save(entity: T) {
         entityCollection.upsert(entity)
     }
+
+    override suspend fun deleteById(id: String): Boolean {
+        return entityCollection.deleteOneById(id).deletedCount == 1L
+    }
 }

@@ -23,4 +23,8 @@ public class InMemoryRepository<T : Entity>(
     override suspend fun save(entity: T) {
         entityMap[entity.id] = entity
     }
+
+    override suspend fun deleteById(id: String): Boolean {
+        return entityMap.remove(id) != null
+    }
 }
