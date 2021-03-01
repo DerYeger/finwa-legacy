@@ -49,7 +49,6 @@ dependencies {
     // Ktor
     implementation("io.ktor:ktor-server-core:$ktorVersion")
     implementation("io.ktor:ktor-auth:$ktorVersion")
-    implementation("io.ktor:ktor-locations:$ktorVersion")
     implementation("io.ktor:ktor-server-host-common:$ktorVersion")
     implementation("io.ktor:ktor-serialization:$ktorVersion")
     implementation("io.ktor:ktor-metrics-micrometer:$ktorVersion")
@@ -77,16 +76,10 @@ dependencies {
 }
 
 tasks {
-    compileKotlin {
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "1.8"
         // Format the code before compilation
         dependsOn(ktlintFormat)
-    }
-
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.apply {
-            jvmTarget = "1.8"
-            freeCompilerArgs = freeCompilerArgs + "-Xuse-experimental=io.ktor.locations.KtorExperimentalLocationsAPI"
-        }
     }
 
     ktlintFormat {

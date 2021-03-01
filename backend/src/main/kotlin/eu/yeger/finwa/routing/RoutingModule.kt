@@ -3,22 +3,24 @@ package eu.yeger.finwa.routing
 import eu.yeger.finwa.model.api.HeartbeatRequest
 import eu.yeger.finwa.model.api.HeartbeatResponse
 import io.ktor.application.*
-import io.ktor.locations.*
+import io.ktor.auth.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
 public fun Application.routingModule() {
-    install(Locations)
-
     routing {
         post<HeartbeatRequest>("heartbeat") { request ->
             call.respond(HeartbeatResponse(message = "FinWa-Backend", url = request.url))
         }
-        route("api") {
-            route("users", Route::userRoutes)
+        val authenticationInstalled = application.featureOrNull(Authentication) != null
+        if (authenticationInstalled) {
+            application.log.info("Authentication feature detected, API routes will be secured")
+            authenticate {
+                apiRoutes()
+            }
+        } else {
+            application.log.info("Authentication feature not detected, API routes will not be secured")
+            apiRoutes()
         }
     }
 }
-
-@Location("/location/{name}")
-public class MyLocation(public val name: String, public val arg1: Int = 42, public val arg2: String = "default")

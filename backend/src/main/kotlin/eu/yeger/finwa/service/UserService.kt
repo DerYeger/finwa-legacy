@@ -10,9 +10,8 @@ import eu.yeger.finwa.model.domain.User
 import eu.yeger.finwa.model.domain.toPersistentUser
 import eu.yeger.finwa.model.persistence.PersistentUser
 import eu.yeger.finwa.model.persistence.toUser
-import eu.yeger.finwa.repository.UserRepository
+import eu.yeger.finwa.repository.user.UserRepository
 import eu.yeger.finwa.utils.toResult
-import io.ktor.http.*
 import mu.KotlinLogging
 
 private val loginFailed: ResponseEntity<TranslationDTO> = unauthorized(TranslationDTO("login.error.credentials"))
@@ -22,11 +21,17 @@ public class UserService(
 ) {
     private val logger = KotlinLogging.logger {}
 
-    public suspend fun getAll(): ApiResult<ResponseEntity<List<User>>> {
+    public suspend fun getAll(): ApiResult<List<User>> {
         return userRepository
             .getAll()
             .map(PersistentUser::toUser)
-            .toResult<List<User>, ResponseEntity<TranslationDTO>>()
+            .toResult(::ok)
+    }
+
+    public suspend fun getById(id: String): ApiResult<User> {
+        return userRepository
+            .validateUserWithIdExists(id)
+            .map(PersistentUser::toUser)
             .map(::ok)
     }
 
@@ -43,17 +48,17 @@ public class UserService(
         }
     }
 
-    public suspend fun loginUser(credentials: Credentials): ApiResult<ResponseEntity<ApiToken>> {
+    public suspend fun loginUser(credentials: Credentials): ApiResult<ApiToken> {
         return userRepository
-            .validateUserExists(credentials.username)
+            .validateUserWithNameExists(credentials.username)
             .map(PersistentUser::toUser)
             .andThen { user -> credentials.validateForUser(user) }
-            .map { user -> JWTConfiguration.makeToken(user) }
+            .map(JWTConfiguration::makeToken)
             .mapError { loginFailed }
-            .map { token -> ResponseEntity(HttpStatusCode.OK, token) }
+            .map(::ok)
     }
 
-    private fun Credentials.validateForUser(user: User): ApiResult<User> {
+    private fun Credentials.validateForUser(user: User): IntermediateResult<User> {
         return when (this matches user) {
             true -> Ok(user)
             false -> Err(loginFailed)

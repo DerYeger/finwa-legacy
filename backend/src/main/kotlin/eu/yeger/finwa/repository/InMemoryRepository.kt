@@ -2,9 +2,11 @@ package eu.yeger.finwa.repository
 
 import eu.yeger.finwa.model.persistence.Entity
 import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 
-public class InMemoryRepository<T : Entity> : Repository<T> {
-    private val entityMap = ConcurrentHashMap<String, T>()
+public class InMemoryRepository<T : Entity>(
+    private val entityMap: ConcurrentMap<String, T> = ConcurrentHashMap()
+) : Repository<T> {
 
     override suspend fun getAll(): List<T> {
         return entityMap.values.toList()

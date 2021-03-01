@@ -37,4 +37,31 @@ class ApplicationTest {
             }
         }
     }
+
+    @Test
+    fun `verify that api routes are secured when authentication is configured`() {
+        withTestApplication({
+            mainModule()
+            authModule()
+            koinModule()
+            routingModule()
+        }) {
+            handleRequest(method = HttpMethod.Get, uri = "/api/users").run {
+                response.status() shouldBe HttpStatusCode.Unauthorized
+            }
+        }
+    }
+
+    @Test
+    fun `verify that api routes are not secured when authentication is not configured`() {
+        withTestApplication({
+            mainModule()
+            koinModule()
+            routingModule()
+        }) {
+            handleRequest(method = HttpMethod.Get, uri = "/api/users").run {
+                response.status() shouldBe HttpStatusCode.OK
+            }
+        }
+    }
 }

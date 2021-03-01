@@ -1,9 +1,9 @@
 package eu.yeger.finwa.koin
 
 import eu.yeger.finwa.Arguments
-import eu.yeger.finwa.repository.InMemoryUserRepository
-import eu.yeger.finwa.repository.MongoUserRepository
-import eu.yeger.finwa.repository.UserRepository
+import eu.yeger.finwa.repository.user.InMemoryUserRepository
+import eu.yeger.finwa.repository.user.MongoUserRepository
+import eu.yeger.finwa.repository.user.UserRepository
 import eu.yeger.finwa.useDatabase
 import mu.KotlinLogging
 import org.koin.core.module.Module
