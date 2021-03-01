@@ -12,7 +12,6 @@ import eu.yeger.finwa.model.persistence.PersistentUser
 import eu.yeger.finwa.model.persistence.toUser
 import eu.yeger.finwa.repository.user.UserRepository
 import eu.yeger.finwa.utils.toResult
-import eu.yeger.finwa.utils.vanish
 import mu.KotlinLogging
 
 private val loginFailed: ResponseEntity<TranslationDTO> = unauthorized(TranslationDTO("login.error.credentials"))
@@ -55,8 +54,7 @@ public class UserService(
                     createDefaultUserIfRequired()
                 }
             }
-            .vanish()
-            .map(::ok)
+            .map { ok(Unit) }
     }
 
     public suspend fun createDefaultUserIfRequired() {
