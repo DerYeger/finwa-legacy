@@ -11,6 +11,7 @@ import eu.yeger.finwa.model.domain.toPersistentUser
 import eu.yeger.finwa.model.persistence.PersistentUser
 import eu.yeger.finwa.model.persistence.toUser
 import eu.yeger.finwa.repository.UserRepository
+import eu.yeger.finwa.utils.toResult
 import io.ktor.http.*
 import mu.KotlinLogging
 
@@ -20,6 +21,14 @@ public class UserService(
     private val userRepository: UserRepository
 ) {
     private val logger = KotlinLogging.logger {}
+
+    public suspend fun getAll(): ApiResult<ResponseEntity<List<User>>> {
+        return userRepository
+            .getAll()
+            .map(PersistentUser::toUser)
+            .toResult<List<User>, ResponseEntity<TranslationDTO>>()
+            .map(::ok)
+    }
 
     public suspend fun createDefaultUserIfRequired() {
         val username = Arguments.defaultUsername
