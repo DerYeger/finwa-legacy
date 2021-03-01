@@ -2,10 +2,12 @@
  * The state of this app.
  */
 import { ApiToken } from '../model/api/api-token';
+import { User } from '../model/domain/user';
 
 export interface State {
   settings: Settings;
   apiToken?: ApiToken;
+  userCache: UserCache;
 }
 
 /**
@@ -26,4 +28,9 @@ export interface Settings {
   language?: Language;
   sidebar: boolean;
   theme: Theme;
+}
+
+export interface UserCache {
+  users: User[];
+  timestamp: number | undefined;
 }

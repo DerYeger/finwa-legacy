@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../store/state';
-import { Observable } from 'rxjs';
+import { Observable, OperatorFunction } from 'rxjs';
 import { distinctUntilChanged, filter, map, mergeMap } from 'rxjs/operators';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { HeartbeatResponse } from '../model/api/heartbeat-response';
 import { ApiToken } from '../model/api/api-token';
 import { Credentials } from '../model/api/credentials';
+import { User } from '../model/domain/user';
+import { cacheUsers } from '../store/actions';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +49,20 @@ export class BackendService {
             observe: 'events',
           }) as Observable<HttpEvent<ApiToken>>
       )
+    );
+  }
+
+  public fetchUsers() {
+    this.getBackendUrl((url) => this.http.get<User[]>(`${url}/api/users`)).subscribe((users) => {
+      console.log(users.length);
+      this.store.dispatch(cacheUsers({ users }));
+    });
+  }
+
+  private getBackendUrl<T>(request: (url: string) => Observable<T>) {
+    return this.backendUrl$.pipe(
+      filter((url) => url !== undefined) as OperatorFunction<string | undefined, string>,
+      mergeMap((url: string) => request(url))
     );
   }
 }

@@ -21,6 +21,10 @@ export class MainPage {
       name: 'home.title',
       path: 'home',
     },
+    {
+      name: 'user-management.title',
+      path: 'users',
+    },
   ];
 
   public readonly language$ = this.store.select('settings').pipe(

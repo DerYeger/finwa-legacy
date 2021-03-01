@@ -17,9 +17,10 @@ import { BackendConfigComponent } from './components/backend-config/backend-conf
 import { LoginComponent } from './components/login/login.component';
 import { HttpProgressBarComponent } from './components/http-progress-bar/http-progress-bar.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { UserManagementPage } from './pages/user-management/user-management.page';
 
 @NgModule({
-  declarations: [AppComponent, SetupPage, HomePage, MainPage, BackendConfigComponent, LoginComponent, HttpProgressBarComponent],
+  declarations: [AppComponent, SetupPage, HomePage, MainPage, BackendConfigComponent, LoginComponent, HttpProgressBarComponent, UserManagementPage],
   imports: [
     BrowserModule,
     AppRoutingModule,
