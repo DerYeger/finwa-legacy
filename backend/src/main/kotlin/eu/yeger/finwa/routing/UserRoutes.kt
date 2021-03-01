@@ -14,7 +14,7 @@ public fun Route.userRoutes() {
 
     get { userService.getAll() }
 
-    post<User, User> { user -> userService.create(user) }
+    post { user: User -> userService.create(user) }
 
     route("/{id}") {
         get {

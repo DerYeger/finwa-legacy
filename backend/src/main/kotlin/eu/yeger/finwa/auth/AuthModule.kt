@@ -15,6 +15,8 @@ public fun Application.authModule() {
         }
     }
     routing {
-        authRoutes()
+        route("auth") {
+            authRoutes()
+        }
     }
 }
