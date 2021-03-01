@@ -7,6 +7,7 @@ import eu.yeger.finwa.model.api.Credentials
 import eu.yeger.finwa.model.api.TranslationDTO
 import eu.yeger.finwa.model.domain.User
 import eu.yeger.finwa.model.persistence.PersistentUser
+import eu.yeger.finwa.model.persistence.toApiUser
 import eu.yeger.finwa.model.persistence.toUser
 import eu.yeger.finwa.repository.user.InMemoryUserRepository
 import eu.yeger.finwa.repository.user.UserRepository
@@ -20,9 +21,6 @@ import org.junit.jupiter.api.Test
 
 private val testUser = PersistentUser("testId", "testName", "testPassword")
 private val secondTestUser = PersistentUser("testId2", "testName2", "testPassword2")
-
-private fun User.extractUserIdAndName() = id to name
-private fun PersistentUser.extractUserIdAndName() = id to name
 
 class UserServiceTest {
 
@@ -46,7 +44,7 @@ class UserServiceTest {
         val result = userService.getAll().get()!!
         result.status shouldBe HttpStatusCode.OK
         result.data.size shouldBe 2
-        result.data.map(User::extractUserIdAndName) shouldContainAll listOf(testUser, secondTestUser).map(PersistentUser::extractUserIdAndName)
+        result.data shouldContainAll listOf(testUser, secondTestUser).map(PersistentUser::toApiUser)
     }
 
     @Test
@@ -58,7 +56,7 @@ class UserServiceTest {
         // Then it should be retrieved by id
         val result = userService.getById(testUser.id).get()!!
         result.status shouldBe HttpStatusCode.OK
-        result.data.extractUserIdAndName() shouldBe testUser.extractUserIdAndName()
+        result.data shouldBe testUser.toApiUser()
     }
 
     @Test
@@ -81,7 +79,7 @@ class UserServiceTest {
         // Then the user should be created
         val result = userService.create(testUser.toUser()).get()!!
         result.status shouldBe HttpStatusCode.Created
-        result.data.extractUserIdAndName() shouldBe testUser.extractUserIdAndName()
+        result.data shouldBe testUser.toApiUser()
     }
 
     @Test
@@ -155,7 +153,7 @@ class UserServiceTest {
         val deletionResult = userService.deleteById(testUser.id).get()!!
         deletionResult.status shouldBe HttpStatusCode.OK
         userRepository.getAll().size shouldBe 1
-        userRepository.getAll()[0].extractUserIdAndName() shouldBe secondTestUser.extractUserIdAndName()
+        userRepository.getAll()[0].toApiUser() shouldBe secondTestUser.toApiUser()
     }
 
     @Test

@@ -1,5 +1,6 @@
 package eu.yeger.finwa.model.persistence
 
+import eu.yeger.finwa.model.api.ApiUser
 import eu.yeger.finwa.model.domain.User
 import kotlinx.serialization.Serializable
 
@@ -15,4 +16,10 @@ public fun PersistentUser.toUser(): User =
         id = id,
         name = name,
         password = password
+    )
+
+public fun PersistentUser.toApiUser(): ApiUser =
+    ApiUser(
+        id = id,
+        name = name
     )

@@ -7,8 +7,10 @@ import eu.yeger.finwa.auth.matches
 import eu.yeger.finwa.auth.withHashedPassword
 import eu.yeger.finwa.model.api.*
 import eu.yeger.finwa.model.domain.User
+import eu.yeger.finwa.model.domain.toApiUser
 import eu.yeger.finwa.model.domain.toPersistentUser
 import eu.yeger.finwa.model.persistence.PersistentUser
+import eu.yeger.finwa.model.persistence.toApiUser
 import eu.yeger.finwa.model.persistence.toUser
 import eu.yeger.finwa.repository.user.UserRepository
 import eu.yeger.finwa.utils.toResult
@@ -21,27 +23,27 @@ public class UserService(
 ) {
     private val logger = KotlinLogging.logger {}
 
-    public suspend fun getAll(): ApiResult<List<User>> {
+    public suspend fun getAll(): ApiResult<List<ApiUser>> {
         return userRepository
             .getAll()
-            .map(PersistentUser::toUser)
+            .map(PersistentUser::toApiUser)
             .toResult(::ok)
     }
 
-    public suspend fun getById(id: String): ApiResult<User> {
+    public suspend fun getById(id: String): ApiResult<ApiUser> {
         return userRepository
             .validateUserWithIdExists(id)
-            .map(PersistentUser::toUser)
+            .map(PersistentUser::toApiUser)
             .map(::ok)
     }
 
-    public suspend fun create(user: User): ApiResult<User> {
+    public suspend fun create(user: User): ApiResult<ApiUser> {
         return userRepository
             .validateUserIdIsAvailable(user.id)
             .andThen { userRepository.validateUserNameIsAvailable(user.name) }
             .map { user.withHashedPassword() }
             .onSuccess { hashedUser -> userRepository.save(hashedUser.toPersistentUser()) }
-            .map { hashedUser -> hashedUser.copy(password = "") }
+            .map { hashedUser -> hashedUser.toApiUser() }
             .map(::created)
     }
 
