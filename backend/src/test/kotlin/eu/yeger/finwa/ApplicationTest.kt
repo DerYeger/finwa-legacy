@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test
 class ApplicationTest {
 
     @Test
-    fun testRoot() {
+    fun `verify module configuration and heartbeat`() {
         withTestApplication({
             mainModule()
             authModule()

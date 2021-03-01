@@ -49,7 +49,12 @@ public class UserService(
     public suspend fun deleteById(id: String): ApiResult<Unit> {
         return userRepository
             .validateUserWithIdExists(id)
-            .onSuccess { user -> userRepository.deleteById(user.id) }
+            .onSuccess { user ->
+                userRepository.deleteById(user.id)
+                if (userRepository.isEmpty()) {
+                    createDefaultUserIfRequired()
+                }
+            }
             .vanish()
             .map(::ok)
     }
@@ -61,7 +66,7 @@ public class UserService(
             logger.info { "No existing users" }
             val user = User(name = username, password = password).withHashedPassword().toPersistentUser()
             userRepository.save(user)
-            logger.info { "Created default user" }
+            logger.info { "Created default user ${user.name}" }
         } else {
             logger.info { "Found existing users" }
         }
