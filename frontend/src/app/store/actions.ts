@@ -33,3 +33,5 @@ export const logout = createAction('[apiToken] logout');
 // UserCache
 
 export const cacheUsers = createAction('[userCache] cache', props<{ users: User[] }>());
+
+export const addUserToCache = createAction('[userCache] add', props<{ user: User }>());

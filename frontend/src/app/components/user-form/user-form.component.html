@@ -1,0 +1,13 @@
+<form>
+  <mat-form-field [formGroup]="formGroup">
+    <mat-label>{{ "user.name" | translate }}</mat-label>
+    <input matInput [formControlName]="'name'" placeholder="{{ 'user.name' | translate }}" autocomplete="off" />
+  </mat-form-field>
+  <mat-form-field [formGroup]="formGroup">
+    <mat-label>{{ "user.password" | translate }}</mat-label>
+    <input matInput [formControlName]="'password'" placeholder="{{ 'user.password' | translate }}" autocomplete="off" type="password" />
+  </mat-form-field>
+  <div class="button-container">
+    <button mat-raised-button (click)="submit()" color="primary" [disabled]="formGroup.invalid">{{ submitText | translate }}</button>
+  </div>
+</form>

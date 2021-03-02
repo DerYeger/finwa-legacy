@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { BackendService } from '../../services/backend.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UserCreationDialog } from '../../dialogs/user-creation/user-creation.dialog';
 
 @Component({
   selector: 'finwa-user-management',
@@ -7,9 +9,13 @@ import { BackendService } from '../../services/backend.service';
   styleUrls: ['./user-management.page.scss'],
 })
 export class UserManagementPage {
-  public constructor(private readonly backendService: BackendService) {}
+  public constructor(private readonly backendService: BackendService, private readonly dialog: MatDialog) {}
 
   public refreshUsers(): void {
     this.backendService.fetchUsers();
+  }
+
+  public openCreateUserDialog(): void {
+    this.dialog.open(UserCreationDialog);
   }
 }

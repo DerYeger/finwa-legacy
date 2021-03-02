@@ -1,12 +1,12 @@
 <form>
   <mat-icon class="back-button" (click)="changeServer()"> arrow_back </mat-icon>
   <mat-form-field [formGroup]="formGroup">
-    <mat-label>{{ "login.username" | translate }}</mat-label>
-    <input matInput [formControlName]="'username'" placeholder="{{ 'login.username' | translate }}" autocomplete="off" />
+    <mat-label>{{ "user.name" | translate }}</mat-label>
+    <input matInput [formControlName]="'username'" placeholder="{{ 'user.name' | translate }}" autocomplete="off" />
   </mat-form-field>
   <mat-form-field [formGroup]="formGroup">
-    <mat-label>{{ "login.password" | translate }}</mat-label>
-    <input matInput [formControlName]="'password'" placeholder="{{ 'login.password' | translate }}" autocomplete="off" type="password" />
+    <mat-label>{{ "user.password" | translate }}</mat-label>
+    <input matInput [formControlName]="'password'" placeholder="{{ 'user.password' | translate }}" autocomplete="off" type="password" />
   </mat-form-field>
   <div class="button-container">
     <button mat-raised-button (click)="login()" color="primary" [disabled]="formGroup.invalid">{{ "actions.login" | translate }}</button>

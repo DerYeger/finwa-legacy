@@ -19,9 +19,22 @@ import { HttpProgressBarComponent } from './components/http-progress-bar/http-pr
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { UserManagementPage } from './pages/user-management/user-management.page';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { UserFormComponent } from './components/user-form/user-form.component';
+import { UserCreationDialog } from './dialogs/user-creation/user-creation.dialog';
 
 @NgModule({
-  declarations: [AppComponent, SetupPage, HomePage, MainPage, BackendConfigComponent, LoginComponent, HttpProgressBarComponent, UserManagementPage],
+  declarations: [
+    AppComponent,
+    SetupPage,
+    HomePage,
+    MainPage,
+    BackendConfigComponent,
+    LoginComponent,
+    HttpProgressBarComponent,
+    UserManagementPage,
+    UserFormComponent,
+    UserCreationDialog,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

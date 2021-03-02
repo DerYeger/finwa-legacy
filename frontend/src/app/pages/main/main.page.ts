@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { logout, setLanguage, toggleSidebar, toggleTheme } from 'src/app/store/actions';
 import { State } from '../../store/state';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 interface NamedRoute {
   name: string;
@@ -15,7 +16,7 @@ interface NamedRoute {
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage {
+export class MainPage implements OnDestroy {
   public readonly availableRoutes: NamedRoute[] = [
     {
       name: 'home.title',
@@ -42,7 +43,12 @@ export class MainPage {
     distinctUntilChanged()
   );
 
-  public constructor(private readonly store: Store<State>) {}
+  private readonly tokenSubscription = this.store
+    .select('apiToken')
+    .pipe(filter((apiToken) => apiToken === undefined))
+    .subscribe(() => this.router.navigateByUrl('/setup'));
+
+  public constructor(private readonly store: Store<State>, private readonly router: Router) {}
 
   public toggleSidebar(): void {
     this.store.dispatch(toggleSidebar());
@@ -58,5 +64,9 @@ export class MainPage {
 
   public toggleTheme(): void {
     this.store.dispatch(toggleTheme());
+  }
+
+  public ngOnDestroy(): void {
+    this.tokenSubscription.unsubscribe();
   }
 }

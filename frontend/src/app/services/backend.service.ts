@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { State } from '../store/state';
 import { Observable, OperatorFunction } from 'rxjs';
-import { distinctUntilChanged, filter, map, mergeMap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, mergeMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { HeartbeatResponse } from '../model/api/heartbeat-response';
 import { ApiToken } from '../model/api/api-token';
 import { Credentials } from '../model/api/credentials';
 import { User } from '../model/domain/user';
-import { cacheUsers } from '../store/actions';
+import { addUserToCache, cacheUsers } from '../store/actions';
+import { UserDTO } from '../model/api/user-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -52,11 +53,12 @@ export class BackendService {
     );
   }
 
+  public createUser(user: UserDTO): Observable<User> {
+    return this.getBackendUrl((url) => this.http.post<User>(`${url}/api/users`, user)).pipe(tap((createdUser) => this.store.dispatch(addUserToCache({ user: createdUser }))));
+  }
+
   public fetchUsers() {
-    this.getBackendUrl((url) => this.http.get<User[]>(`${url}/api/users`)).subscribe((users) => {
-      console.log(users.length);
-      this.store.dispatch(cacheUsers({ users }));
-    });
+    this.getBackendUrl((url) => this.http.get<User[]>(`${url}/api/users`)).subscribe((users) => this.store.dispatch(cacheUsers({ users })));
   }
 
   private getBackendUrl<T>(request: (url: string) => Observable<T>) {

@@ -9,7 +9,7 @@
     <mat-sidenav [opened]="sidebar$ | async" class="sidenav mat-elevation-z6" mode="side">
       <mat-nav-list>
         <a *ngFor="let route of availableRoutes" [routerLink]="route.path" mat-list-item>{{route.name! | translate}}</a>
-        <a (click)="logout()" [routerLink]="'/setup'" mat-list-item>{{'actions.logout' | translate}}</a>
+        <a (click)="logout()" mat-list-item>{{'actions.logout' | translate}}</a>
       </mat-nav-list>
       <mat-button-toggle-group (change)="setLanguage($event)" class="language-button-group" name="language">
         <mat-button-toggle [checked]="(language$ | async) === 'en'" class="language-button" value="en">{{'lang.en' | translate}}</mat-button-toggle>

@@ -1,6 +1,6 @@
 import { ActionReducerMap, createReducer, MetaReducer, on } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
-import { cacheUsers, login, logout, setBackendUrl, setLanguage, toggleSidebar, toggleTheme, unsetBackendUrl } from './actions';
+import { addUserToCache, cacheUsers, login, logout, setBackendUrl, setLanguage, toggleSidebar, toggleTheme, unsetBackendUrl } from './actions';
 import { Settings, State, UserCache } from './state';
 import { ApiToken } from '../model/api/api-token';
 
@@ -23,7 +23,8 @@ export const reducers: ActionReducerMap<State> = {
   ),
   userCache: createReducer<UserCache>(
     { users: [], timestamp: undefined },
-    on(cacheUsers, (state, { users }) => ({ users, timestamp: Date.now() }))
+    on(cacheUsers, (state, { users }) => ({ users, timestamp: Date.now() })),
+    on(addUserToCache, (state, { user }) => ({ users: [user, ...state.users], timestamp: Date.now() }))
   ),
 };
 
