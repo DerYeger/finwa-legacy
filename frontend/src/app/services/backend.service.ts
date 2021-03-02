@@ -41,27 +41,29 @@ export class BackendService {
   }
 
   public login(credentials: Credentials): Observable<HttpEvent<ApiToken>> {
-    return this.backendUrl$.pipe(
-      filter((url) => url !== undefined),
-      mergeMap(
-        (url) =>
-          this.http.post<ApiToken>(`${url}/auth/login`, credentials, {
-            reportProgress: true,
-            observe: 'events',
-          }) as Observable<HttpEvent<ApiToken>>
-      )
+    return this.withBackendUrl(
+      (url) =>
+        this.http.post<ApiToken>(`${url}/auth/login`, credentials, {
+          reportProgress: true,
+          observe: 'events',
+        }) as Observable<HttpEvent<ApiToken>>
     );
   }
 
   public createUser(user: UserDTO): Observable<User> {
-    return this.getBackendUrl((url) => this.http.post<User>(`${url}/api/users`, user)).pipe(tap((createdUser) => this.store.dispatch(addUserToCache({ user: createdUser }))));
+    return this.withBackendUrl((url) => this.http.post<User>(`${url}/api/users`, user)).pipe(tap((createdUser) => this.store.dispatch(addUserToCache({ user: createdUser }))));
+  }
+
+  public deleteUserById(id: string): Observable<void> {
+    // TODO prevent deletion of logged-in user
+    return this.withBackendUrl((url) => this.http.delete<void>(`${url}/api/users/${id}`)).pipe(tap(() => this.fetchUsers()));
   }
 
   public fetchUsers() {
-    this.getBackendUrl((url) => this.http.get<User[]>(`${url}/api/users`)).subscribe((users) => this.store.dispatch(cacheUsers({ users })));
+    this.withBackendUrl((url) => this.http.get<User[]>(`${url}/api/users`)).subscribe((users) => this.store.dispatch(cacheUsers({ users })));
   }
 
-  private getBackendUrl<T>(request: (url: string) => Observable<T>) {
+  private withBackendUrl<T>(request: (url: string) => Observable<T>) {
     return this.backendUrl$.pipe(
       filter((url) => url !== undefined) as OperatorFunction<string | undefined, string>,
       mergeMap((url: string) => request(url))

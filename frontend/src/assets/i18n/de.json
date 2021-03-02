@@ -1,7 +1,9 @@
 {
   "actions.confirm": "Bestätigen",
+  "actions.delete": "Löschen",
   "actions.login": "Anmelden",
   "actions.logout": "Abmelden",
+  "actions.title": "Aktionen",
   "api.error.unknown": "Ein unbekannter Fehler ist aufgetreten.",
   "app.title": "FinWa",
   "events.login.expired": "Login expired.",

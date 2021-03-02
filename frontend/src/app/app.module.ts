@@ -21,6 +21,7 @@ import { UserManagementPage } from './pages/user-management/user-management.page
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { UserCreationDialog } from './dialogs/user-creation/user-creation.dialog';
+import { UserTableComponent } from './components/user-table/user-table.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { UserCreationDialog } from './dialogs/user-creation/user-creation.dialog
     UserManagementPage,
     UserFormComponent,
     UserCreationDialog,
+    UserTableComponent,
   ],
   imports: [
     BrowserModule,

@@ -14,7 +14,7 @@ describe('MainPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MainPage],
-      imports: [MaterialModule, StoreModule.forRoot(reducers, undefined), TranslateModule.forRoot(), RouterTestingModule],
+      imports: [MaterialModule, RouterTestingModule.withRoutes([{ path: 'setup', redirectTo: '' }]), StoreModule.forRoot(reducers, undefined), TranslateModule.forRoot()],
     }).compileComponents();
   });
 
