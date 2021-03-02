@@ -1,15 +1,15 @@
 <form>
-  <mat-icon class="back-button" (click)="changeServer()"> arrow_back </mat-icon>
+  <mat-icon (click)="changeServer()" class="back-button"> arrow_back</mat-icon>
   <mat-form-field [formGroup]="formGroup">
     <mat-label>{{ "user.name" | translate }}</mat-label>
-    <input matInput [formControlName]="'username'" placeholder="{{ 'user.name' | translate }}" autocomplete="off" />
+    <input [formControlName]="'username'" autocomplete="off" matInput placeholder="{{ 'user.name' | translate }}" />
   </mat-form-field>
   <mat-form-field [formGroup]="formGroup">
     <mat-label>{{ "user.password" | translate }}</mat-label>
-    <input matInput [formControlName]="'password'" placeholder="{{ 'user.password' | translate }}" autocomplete="off" type="password" />
+    <input [formControlName]="'password'" autocomplete="off" matInput placeholder="{{ 'user.password' | translate }}" type="password" />
   </mat-form-field>
   <div class="button-container">
-    <button mat-raised-button (click)="login()" color="primary" [disabled]="formGroup.invalid">{{ "actions.login" | translate }}</button>
+    <button (click)="login()" [disabled]="formGroup.invalid" color="primary" mat-raised-button>{{ "actions.login" | translate }}</button>
   </div>
 </form>
-<finwa-http-progress-bar class="progress-bar" [requests]="requests$" (responseReceived)="onLoginSuccess($event)"></finwa-http-progress-bar>
+<finwa-http-progress-bar (responseReceived)="onLoginSuccess($event)" [requests]="requests$" class="progress-bar"></finwa-http-progress-bar>

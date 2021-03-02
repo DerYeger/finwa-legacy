@@ -1,12 +1,12 @@
 import { Component, EventEmitter } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { State } from '../../store/state';
 import { Router } from '@angular/router';
 import { BackendService } from '../../services/backend.service';
 import { SnackBarService } from '../../services/snack-bar.service';
 import { HttpEvent } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { setBackendUrl } from '../../store/actions';
 import { HeartbeatResponse } from '../../model/api/heartbeat-response';
 
