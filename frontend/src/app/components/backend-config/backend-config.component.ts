@@ -1,14 +1,15 @@
+import { HttpEvent } from '@angular/common/http';
 import { Component, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { State } from '../../store/state';
 import { Router } from '@angular/router';
-import { BackendService } from '../../services/backend.service';
-import { SnackBarService } from '../../services/snack-bar.service';
-import { HttpEvent } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { setBackendUrl } from '../../store/actions';
-import { HeartbeatResponse } from '../../model/api/heartbeat-response';
+
+import { HeartbeatResponse } from 'src/app/model/api/heartbeat-response';
+import { BackendService } from 'src/app/services/backend.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { setBackendUrl } from 'src/app/store/actions';
+import { State } from 'src/app/store/state';
 
 const hostRegex = '^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]).)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9-]*[A-Za-z0-9])$';
 const addressValidator = Validators.pattern(hostRegex);

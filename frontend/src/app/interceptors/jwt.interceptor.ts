@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { State } from '../store/state';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable, throwError } from 'rxjs';
 import { catchError, first, map, mergeMap } from 'rxjs/operators';
-import { logout } from '../store/actions';
-import { SnackBarService } from '../services/snack-bar.service';
+
+import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { logout } from 'src/app/store/actions';
+import { State } from 'src/app/store/state';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {

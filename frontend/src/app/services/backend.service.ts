@@ -1,15 +1,16 @@
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../store/state';
 import { Observable, OperatorFunction } from 'rxjs';
 import { distinctUntilChanged, filter, map, mergeMap, tap } from 'rxjs/operators';
-import { HttpClient, HttpEvent } from '@angular/common/http';
-import { HeartbeatResponse } from '../model/api/heartbeat-response';
-import { ApiToken } from '../model/api/api-token';
-import { Credentials } from '../model/api/credentials';
-import { User } from '../model/domain/user';
-import { addUserToCache, cacheUsers } from '../store/actions';
-import { UserDTO } from '../model/api/user-dto';
+
+import { ApiToken } from 'src/app/model/api/api-token';
+import { Credentials } from 'src/app/model/api/credentials';
+import { HeartbeatResponse } from 'src/app/model/api/heartbeat-response';
+import { UserDTO } from 'src/app/model/api/user-dto';
+import { User } from 'src/app/model/domain/user';
+import { addUserToCache, cacheUsers } from 'src/app/store/actions';
+import { State } from 'src/app/store/state';
 
 @Injectable({
   providedIn: 'root',

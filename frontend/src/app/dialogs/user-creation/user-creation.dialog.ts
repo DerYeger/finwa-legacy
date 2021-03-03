@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { UserDTO } from '../../model/api/user-dto';
-import { BackendService } from '../../services/backend.service';
 import { MatDialogRef } from '@angular/material/dialog';
+
+import { UserDTO } from 'src/app/model/api/user-dto';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'finwa-user-creation',

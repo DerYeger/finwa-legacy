@@ -1,15 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SetupPage } from './setup.page';
-import { reducers } from '../../store/reducers';
-import { StoreModule } from '@ngrx/store';
-import { RouterTestingModule } from '@angular/router/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MaterialModule } from '../../material/material.module';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoggerTestingModule } from 'ngx-logger/testing';
-import { HttpProgressBarComponent } from '../../components/http-progress-bar/http-progress-bar.component';
-import { BackendConfigComponent } from '../../components/backend-config/backend-config.component';
+
+import { BackendConfigComponent } from 'src/app/components/backend-config/backend-config.component';
+import { HttpProgressBarComponent } from 'src/app/components/http-progress-bar/http-progress-bar.component';
+import { MaterialModule } from 'src/app/material/material.module';
+import { SetupPage } from 'src/app/pages/setup/setup.page';
+import { reducers } from 'src/app/store/reducers';
 
 describe('SetupPage', () => {
   let component: SetupPage;

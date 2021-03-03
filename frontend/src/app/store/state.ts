@@ -1,8 +1,8 @@
 /**
  * The state of this app.
  */
-import { ApiToken } from '../model/api/api-token';
-import { User } from '../model/domain/user';
+import { ApiToken } from 'src/app/model/api/api-token';
+import { User } from 'src/app/model/domain/user';
 
 export interface State {
   settings: Settings;

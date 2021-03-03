@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserDTO } from '../../model/api/user-dto';
+
+import { UserDTO } from 'src/app/model/api/user-dto';
 
 @Component({
   selector: 'finwa-user-form',

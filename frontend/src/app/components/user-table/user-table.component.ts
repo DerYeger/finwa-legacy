@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { User } from '../../model/domain/user';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { State } from '../../store/state';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
-import { BackendService } from '../../services/backend.service';
+
+import { User } from 'src/app/model/domain/user';
+import { BackendService } from 'src/app/services/backend.service';
+import { State } from 'src/app/store/state';
 
 @Component({
   selector: 'finwa-user-table',

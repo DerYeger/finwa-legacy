@@ -1,11 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { logout, setLanguage, toggleSidebar, toggleTheme } from 'src/app/store/actions';
-import { State } from '../../store/state';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+
+import { logout, setLanguage, toggleSidebar, toggleTheme } from 'src/app/store/actions';
+import { State } from 'src/app/store/state';
 
 interface NamedRoute {
   name: string;

@@ -1,14 +1,15 @@
-import { Component, OnDestroy } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import localeEn from '@angular/common/locales/en';
-import { registerLocaleData } from '@angular/common';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Language, State } from './store/state';
-import * as d3 from 'd3';
 import { TranslateService } from '@ngx-translate/core';
-import { setLanguage } from './store/actions';
+import * as d3 from 'd3';
 import { NGXLogger } from 'ngx-logger';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+
+import { setLanguage } from 'src/app/store/actions';
+import { Language, State } from 'src/app/store/state';
 
 @Component({
   selector: 'finwa-root',

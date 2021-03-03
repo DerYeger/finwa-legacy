@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { BackendService } from '../../services/backend.service';
 import { MatDialog } from '@angular/material/dialog';
-import { UserCreationDialog } from '../../dialogs/user-creation/user-creation.dialog';
+
+import { UserCreationDialog } from 'src/app/dialogs/user-creation/user-creation.dialog';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'finwa-user-management',

@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Observable, of, Subscription } from 'rxjs';
-import { ProgressBarMode } from '@angular/material/progress-bar';
-import { catchError, map } from 'rxjs/operators';
 import { HttpEvent, HttpEventType, HttpProgressEvent, HttpResponse } from '@angular/common/http';
-import { SnackBarService } from '../../services/snack-bar.service';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ProgressBarMode } from '@angular/material/progress-bar';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+import { SnackBarService } from 'src/app/services/snack-bar.service';
 
 type State = 'sending' | 'querying' | 'fetching';
 

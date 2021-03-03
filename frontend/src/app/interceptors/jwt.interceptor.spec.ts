@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { JwtInterceptor } from './jwt.interceptor';
 import { StoreModule } from '@ngrx/store';
-import { reducers } from '../store/reducers';
-import { MaterialModule } from '../material/material.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoggerTestingModule } from 'ngx-logger/testing';
+
+import { JwtInterceptor } from 'src/app/interceptors/jwt.interceptor';
+import { MaterialModule } from 'src/app/material/material.module';
+import { reducers } from 'src/app/store/reducers';
 
 describe('JwtInterceptor', () => {
   beforeEach(() =>

@@ -1,8 +1,9 @@
 import { ActionReducerMap, createReducer, MetaReducer, on } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
-import { addUserToCache, cacheUsers, login, logout, setBackendUrl, setLanguage, toggleSidebar, toggleTheme, unsetBackendUrl } from './actions';
-import { Settings, State, UserCache } from './state';
-import { ApiToken } from '../model/api/api-token';
+
+import { ApiToken } from 'src/app/model/api/api-token';
+import { addUserToCache, cacheUsers, login, logout, setBackendUrl, setLanguage, toggleSidebar, toggleTheme, unsetBackendUrl } from 'src/app/store/actions';
+import { Settings, State, UserCache } from 'src/app/store/state';
 
 /**
  * Reducers for the app-state.

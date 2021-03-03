@@ -1,7 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { Language } from './state';
-import { ApiToken } from '../model/api/api-token';
-import { User } from '../model/domain/user'; // Settings
+
+import { ApiToken } from 'src/app/model/api/api-token';
+import { User } from 'src/app/model/domain/user';
+import { Language } from 'src/app/store/state';
 
 // Settings
 

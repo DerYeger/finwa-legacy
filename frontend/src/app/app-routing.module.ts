@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SetupPage } from './pages/setup/setup.page';
-import { AuthGuard } from './guards/auth.guard';
-import { HomePage } from './pages/home/home.page';
-import { MainPage } from './pages/main/main.page';
-import { UserManagementPage } from './pages/user-management/user-management.page';
+
+import { AuthGuard } from 'src/app/guards/auth.guard';
+import { HomePage } from 'src/app/pages/home/home.page';
+import { MainPage } from 'src/app/pages/main/main.page';
+import { SetupPage } from 'src/app/pages/setup/setup.page';
+import { UserManagementPage } from 'src/app/pages/user-management/user-management.page';
 
 export const routes: Routes = [
   { path: 'setup', component: SetupPage, canActivate: [AuthGuard] },
