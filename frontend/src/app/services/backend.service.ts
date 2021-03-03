@@ -64,11 +64,11 @@ export class BackendService {
     return this.withBackendUrl((url) => this.http.delete<void>(`${url}/api/users/${id}`)).pipe(tap(() => this.fetchUsers()));
   }
 
-  public fetchUsers() {
+  public fetchUsers(): void {
     this.withBackendUrl((url) => this.http.get<User[]>(`${url}/api/users`)).subscribe((users) => this.store.dispatch(cacheUsers({ users })));
   }
 
-  private withBackendUrl<T>(request: (url: string) => Observable<T>) {
+  private withBackendUrl<T>(request: (url: string) => Observable<T>): Observable<T> {
     return this.backendUrl$.pipe(
       filter((url) => url !== undefined) as OperatorFunction<string | undefined, string>,
       mergeMap((url: string) => request(url))

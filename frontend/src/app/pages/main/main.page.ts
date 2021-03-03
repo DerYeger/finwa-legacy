@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 
+import { BackendService } from 'src/app/services/backend.service';
 import { logout, setLanguage, toggleSidebar, toggleTheme } from 'src/app/store/actions';
 import { State } from 'src/app/store/state';
 
@@ -53,7 +54,9 @@ export class MainPage implements OnDestroy {
       this.router.navigateByUrl('/setup');
     });
 
-  public constructor(private readonly dialog: MatDialog, private readonly router: Router, private readonly store: Store<State>) {}
+  public constructor(private readonly backendService: BackendService, private readonly dialog: MatDialog, private readonly router: Router, private readonly store: Store<State>) {
+    this.backendService.fetchUsers();
+  }
 
   public toggleSidebar(): void {
     this.store.dispatch(toggleSidebar());
