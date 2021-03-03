@@ -1,15 +1,16 @@
+import { HttpEvent } from '@angular/common/http';
 import { Component, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { State } from '../../store/state';
 import { Router } from '@angular/router';
-import { BackendService } from '../../services/backend.service';
-import { SnackBarService } from '../../services/snack-bar.service';
-import { login, unsetBackendUrl } from '../../store/actions';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { HttpEvent } from '@angular/common/http';
-import { Credentials } from '../../model/api/credentials';
-import { ApiToken } from '../../model/api/api-token';
+
+import { ApiToken } from 'src/app/model/api/api-token';
+import { Credentials } from 'src/app/model/api/credentials';
+import { BackendService } from 'src/app/services/backend.service';
+import { SnackBarService } from 'src/app/services/snack-bar.service';
+import { login, unsetBackendUrl } from 'src/app/store/actions';
+import { State } from 'src/app/store/state';
 
 @Component({
   selector: 'finwa-login',

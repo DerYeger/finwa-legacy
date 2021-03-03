@@ -6,15 +6,17 @@ import io.ktor.auth.jwt.*
 import io.ktor.routing.*
 
 public fun Application.authModule() {
-    authentication {
-        jwt {
-            verifier(JWTConfiguration.verifier)
-            validate { credential ->
-                if (credential.payload.audience.contains(JWTConfiguration.audience)) JWTPrincipal(credential.payload) else null
-            }
-        }
+  authentication {
+    jwt {
+      verifier(JWTConfiguration.verifier)
+      validate { credential ->
+        if (credential.payload.audience.contains(JWTConfiguration.audience)) JWTPrincipal(credential.payload) else null
+      }
     }
-    routing {
-        authRoutes()
+  }
+  routing {
+    route("auth") {
+      authRoutes()
     }
+  }
 }

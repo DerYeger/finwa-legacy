@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BackendService } from '../../services/backend.service';
-import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { State } from '../../store/state';
-import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+
+import { BackendService } from 'src/app/services/backend.service';
+import { State } from 'src/app/store/state';
 
 @Component({
   selector: 'finwa-setup',

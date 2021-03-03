@@ -16,25 +16,52 @@ import org.junit.jupiter.api.Test
 
 class ApplicationTest {
 
-    @Test
-    fun testRoot() {
-        withTestApplication({
-            mainModule()
-            authModule()
-            koinModule()
-            monitoringModule()
-            routingModule()
-            initializationModule()
-        }) {
-            handleRequest {
-                method = HttpMethod.Post
-                uri = "/heartbeat"
-                addHeader("Content-Type", "application/json")
-                setBody(Json.encodeToString(HeartbeatRequest("test.domain.org")))
-            }.run {
-                response.status() shouldBe HttpStatusCode.OK
-                Json.decodeFromString<HeartbeatResponse>(response.content!!) shouldBe HeartbeatResponse(message = "FinWa-Backend", url = "test.domain.org")
-            }
-        }
+  @Test
+  fun `verify module configuration and heartbeat`() {
+    withTestApplication({
+      mainModule()
+      authModule()
+      koinModule()
+      monitoringModule()
+      routingModule()
+      initializationModule()
+    }) {
+      handleRequest {
+        method = HttpMethod.Post
+        uri = "/heartbeat"
+        addHeader("Content-Type", "application/json")
+        setBody(Json.encodeToString(HeartbeatRequest("test.domain.org")))
+      }.run {
+        response.status() shouldBe HttpStatusCode.OK
+        Json.decodeFromString<HeartbeatResponse>(response.content!!) shouldBe HeartbeatResponse(message = "FinWa-Backend", url = "test.domain.org")
+      }
     }
+  }
+
+  @Test
+  fun `verify that api routes are secured when authentication is configured`() {
+    withTestApplication({
+      mainModule()
+      authModule()
+      koinModule()
+      routingModule()
+    }) {
+      handleRequest(method = HttpMethod.Get, uri = "/api/users").run {
+        response.status() shouldBe HttpStatusCode.Unauthorized
+      }
+    }
+  }
+
+  @Test
+  fun `verify that api routes are not secured when authentication is not configured`() {
+    withTestApplication({
+      mainModule()
+      koinModule()
+      routingModule()
+    }) {
+      handleRequest(method = HttpMethod.Get, uri = "/api/users").run {
+        response.status() shouldBe HttpStatusCode.OK
+      }
+    }
+  }
 }

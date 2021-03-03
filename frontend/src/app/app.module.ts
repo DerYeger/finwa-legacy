@@ -1,25 +1,46 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SetupPage } from './pages/setup/setup.page';
-import { MaterialModule } from './material/material.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { StoreModule } from '@ngrx/store';
-import { metaReducers, reducers } from './store/reducers';
-import { DEFAULT_COLOR_SCHEME, LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import { environment } from '../environments/environment';
-import { HttpClientModule } from '@angular/common/http';
-import { HomePage } from './pages/home/home.page';
-import { MainPage } from './pages/main/main.page';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BackendConfigComponent } from './components/backend-config/backend-config.component';
-import { LoginComponent } from './components/login/login.component';
-import { HttpProgressBarComponent } from './components/http-progress-bar/http-progress-bar.component';
+import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { StoreModule } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+import { DEFAULT_COLOR_SCHEME, LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { AppComponent } from 'src/app/app.component';
+import { BackendConfigComponent } from 'src/app/components/backend-config/backend-config.component';
+import { HttpProgressBarComponent } from 'src/app/components/http-progress-bar/http-progress-bar.component';
+import { LoginComponent } from 'src/app/components/login/login.component';
+import { UserFormComponent } from 'src/app/components/user-form/user-form.component';
+import { UserTableComponent } from 'src/app/components/user-table/user-table.component';
+import { UserCreationDialog } from 'src/app/dialogs/user-creation/user-creation.dialog';
+import { UserEditDialog } from 'src/app/dialogs/user-edit/user-edit.dialog';
+import { AuthInterceptor } from 'src/app/interceptors/auth.interceptor';
+import { ErrorInterceptor } from 'src/app/interceptors/error.interceptor';
+import { MaterialModule } from 'src/app/material/material.module';
+import { HomePage } from 'src/app/pages/home/home.page';
+import { MainPage } from 'src/app/pages/main/main.page';
+import { SetupPage } from 'src/app/pages/setup/setup.page';
+import { UserManagementPage } from 'src/app/pages/user-management/user-management.page';
+import { metaReducers, reducers } from 'src/app/store/reducers';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
-  declarations: [AppComponent, SetupPage, HomePage, MainPage, BackendConfigComponent, LoginComponent, HttpProgressBarComponent],
+  declarations: [
+    AppComponent,
+    SetupPage,
+    HomePage,
+    MainPage,
+    BackendConfigComponent,
+    LoginComponent,
+    HttpProgressBarComponent,
+    UserManagementPage,
+    UserFormComponent,
+    UserCreationDialog,
+    UserTableComponent,
+    UserEditDialog,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -41,7 +62,18 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

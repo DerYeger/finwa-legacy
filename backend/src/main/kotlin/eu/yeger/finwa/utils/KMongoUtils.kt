@@ -8,14 +8,14 @@ import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.eq
 
 public suspend fun <T : Entity> CoroutineCollection<T>.upsert(
-    entity: T,
-    options: UpdateOptions = UpdateOptions()
+  entity: T,
+  options: UpdateOptions = UpdateOptions()
 ): UpdateResult =
-    updateOneById(
-        id = entity.id,
-        update = entity,
-        options = options.upsert(true)
-    )
+  updateOneById(
+    id = entity.id,
+    update = entity,
+    options = options.upsert(true)
+  )
 
 public suspend fun <T : Entity> CoroutineCollection<T>.updateById(id: String, update: Bson): T? =
-    findOneAndUpdate(filter = Entity::id eq id, update)
+  findOneAndUpdate(filter = Entity::id eq id, update)

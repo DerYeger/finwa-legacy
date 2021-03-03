@@ -6,8 +6,8 @@ import kotlinx.coroutines.runBlocking
 import org.koin.ktor.ext.inject
 
 public fun Application.initializationModule() {
-    val userService: UserService by inject()
-    runBlocking {
-        userService.createDefaultUserIfRequired()
-    }
+  val userService: UserService by inject()
+  runBlocking {
+    userService.createDefaultUserIfRequired()
+  }
 }

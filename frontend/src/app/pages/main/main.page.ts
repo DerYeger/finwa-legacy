@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { logout, setLanguage, toggleSidebar, toggleTheme } from 'src/app/store/actions';
-import { State } from '../../store/state';
+import { Component, OnDestroy } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+
+import { BackendService } from 'src/app/services/backend.service';
+import { logout, setLanguage, toggleSidebar, toggleTheme } from 'src/app/store/actions';
+import { State } from 'src/app/store/state';
 
 interface NamedRoute {
   name: string;
@@ -15,11 +19,15 @@ interface NamedRoute {
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage {
+export class MainPage implements OnDestroy {
   public readonly availableRoutes: NamedRoute[] = [
     {
       name: 'home.title',
       path: 'home',
+    },
+    {
+      name: 'user-management.title',
+      path: 'users',
     },
   ];
 
@@ -38,7 +46,17 @@ export class MainPage {
     distinctUntilChanged()
   );
 
-  public constructor(private readonly store: Store<State>) {}
+  private readonly tokenSubscription = this.store
+    .select('apiToken')
+    .pipe(filter((apiToken) => apiToken === undefined))
+    .subscribe(() => {
+      this.dialog.closeAll();
+      this.router.navigateByUrl('/setup');
+    });
+
+  public constructor(private readonly backendService: BackendService, private readonly dialog: MatDialog, private readonly router: Router, private readonly store: Store<State>) {
+    this.backendService.fetchUsers();
+  }
 
   public toggleSidebar(): void {
     this.store.dispatch(toggleSidebar());
@@ -54,5 +72,9 @@ export class MainPage {
 
   public toggleTheme(): void {
     this.store.dispatch(toggleTheme());
+  }
+
+  public ngOnDestroy(): void {
+    this.tokenSubscription.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
 export interface ApiToken {
-  token: string;
+  jwt: string;
   expiration: number;
 }

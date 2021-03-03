@@ -13,7 +13,7 @@ Importing or reloading the Gradle project will also install all required depende
 ### Development server
 
 The Gradle `run` task will start the development server.
->Note: Default port is 8080.
+> Note: Default port is 8080.
 
 ### Linting & formatting
 
@@ -21,7 +21,8 @@ Run the Gradle `ktlintFormat` task to lint and format all source files. It will 
 
 ## Build
 
-Run the Gradle `build` task to generate a `.jar` file. The build artifacts will be stored in the `build/libs/` directory.
+Run the Gradle `build` task to generate a `.jar` file. The build artifacts will be stored in the `build/libs/`
+directory.
 
 ### Running tests
 
@@ -36,4 +37,4 @@ Run the Gradle `dokkaHtml` task to generate the documentation. It will be stored
 ### Docker
 
 Run `docker-compose up -d --build` to build and start a container. Alternatively, build the image via the Dockerfile.
->Note: Default port is 8080.
+> Note: Default port is 8080.

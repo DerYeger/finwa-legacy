@@ -1,6 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { Language } from './state';
-import { ApiToken } from '../model/api/api-token';
+
+import { ApiToken } from 'src/app/model/api/api-token';
+import { User } from 'src/app/model/domain/user';
+import { Language } from 'src/app/store/state';
 
 // Settings
 
@@ -28,3 +30,9 @@ export const toggleTheme = createAction('[settings.theme] toggle');
 export const login = createAction('[apiToken] login', props<{ apiToken: ApiToken }>());
 
 export const logout = createAction('[apiToken] logout');
+
+// UserCache
+
+export const cacheUsers = createAction('[userCache] cache', props<{ users: User[] }>());
+
+export const addUserToCache = createAction('[userCache] add', props<{ user: User }>());

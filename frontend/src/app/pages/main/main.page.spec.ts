@@ -1,11 +1,12 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MainPage } from './main.page';
-import { StoreModule } from '@ngrx/store';
-import { reducers } from '../../store/reducers';
-import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MaterialModule } from '../../material/material.module';
+import { StoreModule } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { MaterialModule } from 'src/app/material/material.module';
+import { MainPage } from 'src/app/pages/main/main.page';
+import { reducers } from 'src/app/store/reducers';
 
 describe('MainPage', () => {
   let component: MainPage;
@@ -14,7 +15,13 @@ describe('MainPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MainPage],
-      imports: [MaterialModule, StoreModule.forRoot(reducers, undefined), TranslateModule.forRoot(), RouterTestingModule],
+      imports: [
+        HttpClientTestingModule,
+        MaterialModule,
+        RouterTestingModule.withRoutes([{ path: 'setup', redirectTo: '' }]),
+        StoreModule.forRoot(reducers, undefined),
+        TranslateModule.forRoot(),
+      ],
     }).compileComponents();
   });
 
