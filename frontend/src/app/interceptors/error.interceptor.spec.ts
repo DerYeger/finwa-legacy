@@ -3,20 +3,20 @@ import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoggerTestingModule } from 'ngx-logger/testing';
 
-import { JwtInterceptor } from 'src/app/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from 'src/app/interceptors/error.interceptor';
 import { MaterialModule } from 'src/app/material/material.module';
 import { reducers } from 'src/app/store/reducers';
 
-describe('JwtInterceptor', () => {
+describe('ErrorInterceptor', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
       imports: [LoggerTestingModule, MaterialModule, StoreModule.forRoot(reducers, undefined), TranslateModule.forRoot()],
-      providers: [JwtInterceptor],
+      providers: [ErrorInterceptor],
     })
   );
 
   it('should be created', () => {
-    const interceptor: JwtInterceptor = TestBed.inject(JwtInterceptor);
+    const interceptor: ErrorInterceptor = TestBed.inject(ErrorInterceptor);
     expect(interceptor).toBeTruthy();
   });
 });

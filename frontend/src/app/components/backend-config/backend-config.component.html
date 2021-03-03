@@ -19,9 +19,4 @@
     <button (click)="testBackendConfiguration()" [disabled]="formGroup.invalid" color="primary" mat-raised-button>{{ "setup.next" | translate }}</button>
   </div>
 </form>
-<finwa-http-progress-bar
-  (errorOccurred)="onErrorOccurred()"
-  (responseReceived)="onResponseReceived($event)"
-  [requests]="requests$"
-  class="progress-bar"
-></finwa-http-progress-bar>
+<finwa-http-progress-bar (errorOccurred)="onErrorOccurred()" (responseReceived)="onResponseReceived($event)" [requests]="requests$" class="progress-bar"></finwa-http-progress-bar>

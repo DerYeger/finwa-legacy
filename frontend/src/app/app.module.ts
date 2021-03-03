@@ -16,7 +16,8 @@ import { UserFormComponent } from 'src/app/components/user-form/user-form.compon
 import { UserTableComponent } from 'src/app/components/user-table/user-table.component';
 import { UserCreationDialog } from 'src/app/dialogs/user-creation/user-creation.dialog';
 import { UserEditDialog } from 'src/app/dialogs/user-edit/user-edit.dialog';
-import { JwtInterceptor } from 'src/app/interceptors/jwt.interceptor';
+import { AuthInterceptor } from 'src/app/interceptors/auth.interceptor';
+import { ErrorInterceptor } from 'src/app/interceptors/error.interceptor';
 import { MaterialModule } from 'src/app/material/material.module';
 import { HomePage } from 'src/app/pages/home/home.page';
 import { MainPage } from 'src/app/pages/main/main.page';
@@ -64,7 +65,12 @@ import { environment } from 'src/environments/environment';
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
   ],
