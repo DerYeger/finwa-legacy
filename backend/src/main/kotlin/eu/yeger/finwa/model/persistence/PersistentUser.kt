@@ -6,20 +6,20 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class PersistentUser(
-    override val id: String,
-    val name: String,
-    val password: String
+  override val id: String,
+  val name: String,
+  val password: String
 ) : Entity
 
 public fun PersistentUser.toUser(): User =
-    User(
-        id = id,
-        name = name,
-        password = password
-    )
+  User(
+    id = id,
+    name = name,
+    password = password
+  )
 
 public fun PersistentUser.toApiUser(): ApiUser =
-    ApiUser(
-        id = id,
-        name = name
-    )
+  ApiUser(
+    id = id,
+    name = name
+  )

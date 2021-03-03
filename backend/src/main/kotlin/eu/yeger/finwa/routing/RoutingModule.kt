@@ -8,19 +8,19 @@ import io.ktor.response.*
 import io.ktor.routing.*
 
 public fun Application.routingModule() {
-    routing {
-        post<HeartbeatRequest>("heartbeat") { request ->
-            call.respond(HeartbeatResponse(message = "FinWa-Backend", url = request.url))
-        }
-        val authenticationInstalled = application.featureOrNull(Authentication) != null
-        if (authenticationInstalled) {
-            application.log.info("Authentication feature detected, API routes will be secured")
-            authenticate {
-                apiRoutes()
-            }
-        } else {
-            application.log.info("Authentication feature not detected, API routes will not be secured")
-            apiRoutes()
-        }
+  routing {
+    post<HeartbeatRequest>("heartbeat") { request ->
+      call.respond(HeartbeatResponse(message = "FinWa-Backend", url = request.url))
     }
+    val authenticationInstalled = application.featureOrNull(Authentication) != null
+    if (authenticationInstalled) {
+      application.log.info("Authentication feature detected, API routes will be secured")
+      authenticate {
+        apiRoutes()
+      }
+    } else {
+      application.log.info("Authentication feature not detected, API routes will not be secured")
+      apiRoutes()
+    }
+  }
 }

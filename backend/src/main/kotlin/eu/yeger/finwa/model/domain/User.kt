@@ -7,20 +7,20 @@ import java.util.*
 
 @Serializable
 public data class User(
-    val id: String = UUID.randomUUID().toString(),
-    val name: String,
-    val password: String
+  val id: String = UUID.randomUUID().toString(),
+  val name: String,
+  val password: String
 )
 
 public fun User.toPersistentUser(): PersistentUser =
-    PersistentUser(
-        id = id,
-        name = name,
-        password = password
-    )
+  PersistentUser(
+    id = id,
+    name = name,
+    password = password
+  )
 
 public fun User.toApiUser(): ApiUser =
-    ApiUser(
-        id = id,
-        name = name
-    )
+  ApiUser(
+    id = id,
+    name = name
+  )

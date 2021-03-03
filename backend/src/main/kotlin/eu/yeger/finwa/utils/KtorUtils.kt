@@ -12,34 +12,34 @@ import io.ktor.routing.post as ktorPost
 
 @ContextDsl
 public inline fun <reified T : Any> Route.get(
-    path: String = "",
-    crossinline body: suspend PipelineContext<Unit, ApplicationCall>.() -> ApiResult<T>
+  path: String = "",
+  crossinline body: suspend PipelineContext<Unit, ApplicationCall>.() -> ApiResult<T>
 ): Route {
-    return ktorGet(path) {
-        respondWithResult(body())
-    }
+  return ktorGet(path) {
+    respondWithResult(body())
+  }
 }
 
 @ContextDsl
 public inline fun <reified R : Any, reified T : Any> Route.post(
-    path: String = "",
-    crossinline body: suspend PipelineContext<Unit, ApplicationCall>.(R) -> ApiResult<T>
+  path: String = "",
+  crossinline body: suspend PipelineContext<Unit, ApplicationCall>.(R) -> ApiResult<T>
 ): Route {
-    return ktorPost<R>(path) { received ->
-        respondWithResult(body(received))
-    }
+  return ktorPost<R>(path) { received ->
+    respondWithResult(body(received))
+  }
 }
 
 @ContextDsl
 public inline fun <reified T : Any> Route.delete(
-    path: String = "",
-    crossinline body: suspend PipelineContext<Unit, ApplicationCall>.() -> ApiResult<T>
+  path: String = "",
+  crossinline body: suspend PipelineContext<Unit, ApplicationCall>.() -> ApiResult<T>
 ): Route {
-    return ktorDelete(path) {
-        respondWithResult(body())
-    }
+  return ktorDelete(path) {
+    respondWithResult(body())
+  }
 }
 
 public fun PipelineContext<Unit, ApplicationCall>.getParameter(name: String): String {
-    return call.parameters[name] ?: throw BadRequestException("")
+  return call.parameters[name] ?: throw BadRequestException("")
 }

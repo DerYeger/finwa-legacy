@@ -13,18 +13,18 @@ import org.litote.kmongo.coroutine.CoroutineDatabase
 private val logger = KotlinLogging.logger { }
 
 public val repositoryModule: Module = when (Arguments.useDatabase) {
-    true -> module {
-        logger.info { "Using MongoDB-repositories" }
+  true -> module {
+    logger.info { "Using MongoDB-repositories" }
 
-        single<UserRepository> {
-            MongoUserRepository(get<CoroutineDatabase>().getCollection())
-        }
+    single<UserRepository> {
+      MongoUserRepository(get<CoroutineDatabase>().getCollection())
     }
-    false -> module {
-        logger.info { "Falling back to in-memory-repositories" }
+  }
+  false -> module {
+    logger.info { "Falling back to in-memory-repositories" }
 
-        single<UserRepository> {
-            InMemoryUserRepository()
-        }
+    single<UserRepository> {
+      InMemoryUserRepository()
     }
+  }
 }

@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class ApiUser(
-    val id: String,
-    val name: String
+  val id: String,
+  val name: String
 )

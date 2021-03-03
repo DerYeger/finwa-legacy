@@ -10,19 +10,19 @@ import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
 public fun Route.userRoutes() {
-    val userService: UserService by inject()
+  val userService: UserService by inject()
 
-    get { userService.getAll() }
+  get { userService.getAll() }
 
-    post { user: User -> userService.create(user) }
+  post { user: User -> userService.create(user) }
 
-    route("/{id}") {
-        get {
-            userService.getById(getParameter("id"))
-        }
-
-        delete {
-            userService.deleteById(getParameter("id"))
-        }
+  route("/{id}") {
+    get {
+      userService.getById(getParameter("id"))
     }
+
+    delete {
+      userService.deleteById(getParameter("id"))
+    }
+  }
 }

@@ -4,11 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class HeartbeatRequest(
-    val url: String
+  val url: String
 )
 
 @Serializable
 public data class HeartbeatResponse(
-    val message: String,
-    val url: String
+  val message: String,
+  val url: String
 )

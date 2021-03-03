@@ -19,73 +19,73 @@ import mu.KotlinLogging
 private val loginFailed: ResponseEntity<TranslationDTO> = unauthorized(TranslationDTO("login.error.credentials"))
 
 public class UserService(
-    private val userRepository: UserRepository
+  private val userRepository: UserRepository
 ) {
-    private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-    public suspend fun getAll(): ApiResult<List<ApiUser>> {
-        return userRepository
-            .getAll()
-            .map(PersistentUser::toApiUser)
-            .toResult(::ok)
-    }
+  public suspend fun getAll(): ApiResult<List<ApiUser>> {
+    return userRepository
+      .getAll()
+      .map(PersistentUser::toApiUser)
+      .toResult(::ok)
+  }
 
-    public suspend fun getById(id: String): ApiResult<ApiUser> {
-        return userRepository
-            .validateUserWithIdExists(id)
-            .map(PersistentUser::toApiUser)
-            .map(::ok)
-    }
+  public suspend fun getById(id: String): ApiResult<ApiUser> {
+    return userRepository
+      .validateUserWithIdExists(id)
+      .map(PersistentUser::toApiUser)
+      .map(::ok)
+  }
 
-    public suspend fun create(user: User): ApiResult<ApiUser> {
-        return userRepository
-            .validateUserIdIsAvailable(user.id)
-            .andThen { userRepository.validateUserNameIsAvailable(user.name) }
-            .map { user.withHashedPassword() }
-            .onSuccess { hashedUser -> userRepository.save(hashedUser.toPersistentUser()) }
-            .map { hashedUser -> hashedUser.toApiUser() }
-            .map(::created)
-    }
+  public suspend fun create(user: User): ApiResult<ApiUser> {
+    return userRepository
+      .validateUserIdIsAvailable(user.id)
+      .andThen { userRepository.validateUserNameIsAvailable(user.name) }
+      .map { user.withHashedPassword() }
+      .onSuccess { hashedUser -> userRepository.save(hashedUser.toPersistentUser()) }
+      .map { hashedUser -> hashedUser.toApiUser() }
+      .map(::created)
+  }
 
-    public suspend fun deleteById(id: String): ApiResult<Unit> {
-        return userRepository
-            .validateUserWithIdExists(id)
-            .onSuccess { user ->
-                userRepository.deleteById(user.id)
-                if (userRepository.isEmpty()) {
-                    createDefaultUserIfRequired()
-                }
-            }
-            .map { ok(Unit) }
-    }
-
-    public suspend fun createDefaultUserIfRequired() {
-        val username = Arguments.defaultUsername
-        val password = Arguments.defaultPassword
+  public suspend fun deleteById(id: String): ApiResult<Unit> {
+    return userRepository
+      .validateUserWithIdExists(id)
+      .onSuccess { user ->
+        userRepository.deleteById(user.id)
         if (userRepository.isEmpty()) {
-            logger.info { "No existing users" }
-            val user = User(name = username, password = password).withHashedPassword().toPersistentUser()
-            userRepository.save(user)
-            logger.info { "Created default user ${user.name}" }
-        } else {
-            logger.info { "Found existing users" }
+          createDefaultUserIfRequired()
         }
-    }
+      }
+      .map { ok(Unit) }
+  }
 
-    public suspend fun loginUser(credentials: Credentials): ApiResult<ApiToken> {
-        return userRepository
-            .validateUserWithNameExists(credentials.username)
-            .map(PersistentUser::toUser)
-            .andThen { user -> credentials.validateForUser(user) }
-            .map(JWTConfiguration::makeToken)
-            .mapError { loginFailed }
-            .map(::ok)
+  public suspend fun createDefaultUserIfRequired() {
+    val username = Arguments.defaultUsername
+    val password = Arguments.defaultPassword
+    if (userRepository.isEmpty()) {
+      logger.info { "No existing users" }
+      val user = User(name = username, password = password).withHashedPassword().toPersistentUser()
+      userRepository.save(user)
+      logger.info { "Created default user ${user.name}" }
+    } else {
+      logger.info { "Found existing users" }
     }
+  }
 
-    private fun Credentials.validateForUser(user: User): IntermediateResult<User> {
-        return when (this matches user) {
-            true -> Ok(user)
-            false -> Err(loginFailed)
-        }
+  public suspend fun loginUser(credentials: Credentials): ApiResult<ApiToken> {
+    return userRepository
+      .validateUserWithNameExists(credentials.username)
+      .map(PersistentUser::toUser)
+      .andThen { user -> credentials.validateForUser(user) }
+      .map(JWTConfiguration::makeToken)
+      .mapError { loginFailed }
+      .map(::ok)
+  }
+
+  private fun Credentials.validateForUser(user: User): IntermediateResult<User> {
+    return when (this matches user) {
+      true -> Ok(user)
+      false -> Err(loginFailed)
     }
+  }
 }

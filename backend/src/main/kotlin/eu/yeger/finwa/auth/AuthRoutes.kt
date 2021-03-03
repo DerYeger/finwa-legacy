@@ -7,7 +7,7 @@ import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
 public fun Route.authRoutes() {
-    val userService: UserService by inject()
+  val userService: UserService by inject()
 
-    post("login") { credentials: Credentials -> userService.loginUser(credentials) }
+  post("login") { credentials: Credentials -> userService.loginUser(credentials) }
 }
