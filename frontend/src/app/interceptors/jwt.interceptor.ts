@@ -26,10 +26,17 @@ export class JwtInterceptor implements HttpInterceptor {
         }
         return next.handle(request).pipe(
           catchError((error) => {
-            console.table(error);
             if (jwt !== undefined && error.status === 401) {
               this.store.dispatch(logout());
               this.snackBarService.openSnackBar({ key: 'events.login.expired' });
+            } else {
+              const message = error?.error?.message ?? 'api.error.unknown';
+              if (typeof message === 'string') {
+                this.snackBarService.openSnackBar({ key: message }, undefined, 10000);
+              } else {
+                // Message is TranslationDTO.
+                this.snackBarService.openSnackBar(error?.error?.message, undefined, 10000);
+              }
             }
             return throwError(error);
           })

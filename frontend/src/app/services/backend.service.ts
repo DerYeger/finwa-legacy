@@ -55,6 +55,10 @@ export class BackendService {
     return this.withBackendUrl((url) => this.http.post<User>(`${url}/api/users`, user)).pipe(tap((createdUser) => this.store.dispatch(addUserToCache({ user: createdUser }))));
   }
 
+  public editUser(user: UserDTO): Observable<void> {
+    return this.withBackendUrl((url) => this.http.put<void>(`${url}/api/users`, user)).pipe(tap(() => this.fetchUsers()));
+  }
+
   public deleteUserById(id: string): Observable<void> {
     // TODO prevent deletion of logged-in user
     return this.withBackendUrl((url) => this.http.delete<void>(`${url}/api/users/${id}`)).pipe(tap(() => this.fetchUsers()));

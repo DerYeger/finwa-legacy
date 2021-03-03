@@ -23,6 +23,7 @@ import { SetupPage } from 'src/app/pages/setup/setup.page';
 import { UserManagementPage } from 'src/app/pages/user-management/user-management.page';
 import { metaReducers, reducers } from 'src/app/store/reducers';
 import { environment } from 'src/environments/environment';
+import { UserEditDialog } from './dialogs/user-edit/user-edit.dialog';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { environment } from 'src/environments/environment';
     UserFormComponent,
     UserCreationDialog,
     UserTableComponent,
+    UserEditDialog,
   ],
   imports: [
     BrowserModule,

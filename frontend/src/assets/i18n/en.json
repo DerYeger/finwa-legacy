@@ -4,6 +4,7 @@
   "actions.login": "Login",
   "actions.logout": "Logout",
   "actions.title": "Actions",
+  "actions.update": "Update",
   "api.error.unknown": "An unknown error occurred.",
   "app.title": "FinWa",
   "events.login.expired": "Anmeldung abgelaufen.",
