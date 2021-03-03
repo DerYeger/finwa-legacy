@@ -15,6 +15,7 @@ import { LoginComponent } from 'src/app/components/login/login.component';
 import { UserFormComponent } from 'src/app/components/user-form/user-form.component';
 import { UserTableComponent } from 'src/app/components/user-table/user-table.component';
 import { UserCreationDialog } from 'src/app/dialogs/user-creation/user-creation.dialog';
+import { UserEditDialog } from 'src/app/dialogs/user-edit/user-edit.dialog';
 import { JwtInterceptor } from 'src/app/interceptors/jwt.interceptor';
 import { MaterialModule } from 'src/app/material/material.module';
 import { HomePage } from 'src/app/pages/home/home.page';
@@ -23,7 +24,6 @@ import { SetupPage } from 'src/app/pages/setup/setup.page';
 import { UserManagementPage } from 'src/app/pages/user-management/user-management.page';
 import { metaReducers, reducers } from 'src/app/store/reducers';
 import { environment } from 'src/environments/environment';
-import { UserEditDialog } from './dialogs/user-edit/user-edit.dialog';
 
 @NgModule({
   declarations: [
