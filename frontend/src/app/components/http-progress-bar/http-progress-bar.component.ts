@@ -17,14 +17,11 @@ export class HttpProgressBarComponent<T> implements OnInit, OnDestroy {
   @Input()
   public requests!: Observable<Observable<HttpEvent<T>>>;
 
-  @Input()
-  public displayErrors = true;
-
   @Output()
   public readonly responseReceived = new EventEmitter<T | null>();
 
   @Output()
-  public readonly errorOccurred = new EventEmitter<void>();
+  public readonly errorOccurred = new EventEmitter<any>();
 
   public readonly progress$ = new EventEmitter<number>();
 
@@ -47,8 +44,6 @@ export class HttpProgressBarComponent<T> implements OnInit, OnDestroy {
 
   private requestsSubscription?: Subscription;
   private requestSubscription?: Subscription;
-
-  public constructor(private readonly snackBarService: SnackBarService) {}
 
   public ngOnInit(): void {
     this.requestsSubscription = this.requests.subscribe((request) => {
@@ -100,17 +95,7 @@ export class HttpProgressBarComponent<T> implements OnInit, OnDestroy {
 
   private onError(error: any): Observable<HttpEvent<T>> {
     this.visible$.emit(false);
-    this.errorOccurred.emit();
-    if (!this.displayErrors) {
-      return of();
-    }
-    const message = error?.error?.message ?? 'api.error.unknown';
-    if (typeof message === 'string') {
-      this.snackBarService.openSnackBar({ key: message }, undefined, 10000);
-    } else {
-      // Message is TranslationDTO.
-      this.snackBarService.openSnackBar(error?.error?.message, undefined, 10000);
-    }
+    this.errorOccurred.emit(error);
     return of();
   }
 }
