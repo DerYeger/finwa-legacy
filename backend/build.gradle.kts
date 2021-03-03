@@ -78,6 +78,7 @@ dependencies {
 tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.useIR = true
         // Format the code before compilation
         dependsOn(ktlintFormat)
     }
