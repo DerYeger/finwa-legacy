@@ -14,7 +14,7 @@ describe('UserManagementPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [UserManagementPage, UserTableComponent],
-      imports: [StoreModule.forRoot(reducers, undefined), HttpClientTestingModule, MaterialModule, TranslateModule.forRoot()],
+      imports: [HttpClientTestingModule, MaterialModule, StoreModule.forRoot(reducers, undefined), TranslateModule.forRoot()],
     }).compileComponents();
   });
 

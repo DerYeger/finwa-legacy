@@ -9,7 +9,7 @@ describe('BackendService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot(reducers, undefined), HttpClientTestingModule],
+      imports: [HttpClientTestingModule, StoreModule.forRoot(reducers, undefined)],
     });
     service = TestBed.inject(BackendService);
   });

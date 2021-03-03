@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BackendConfigComponent } from './backend-config.component';
 import { MaterialModule } from '../../material/material.module';
 import { StoreModule } from '@ngrx/store';
@@ -19,14 +18,14 @@ describe('BackendConfigComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [BackendConfigComponent, HttpProgressBarComponent],
       imports: [
-        MaterialModule,
-        StoreModule.forRoot(reducers, undefined),
-        TranslateModule.forRoot(),
-        RouterTestingModule,
         FormsModule,
-        ReactiveFormsModule,
         HttpClientTestingModule,
         LoggerTestingModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        StoreModule.forRoot(reducers, undefined),
+        TranslateModule.forRoot(),
       ],
     }).compileComponents();
   });

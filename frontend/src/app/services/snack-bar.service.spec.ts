@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { SnackBarService } from './snack-bar.service';
 import { MaterialModule } from '../material/material.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -10,7 +9,7 @@ describe('SnackBarService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MaterialModule, TranslateModule.forRoot(), LoggerTestingModule],
+      imports: [LoggerTestingModule, MaterialModule, TranslateModule.forRoot()],
     });
     service = TestBed.inject(SnackBarService);
   });

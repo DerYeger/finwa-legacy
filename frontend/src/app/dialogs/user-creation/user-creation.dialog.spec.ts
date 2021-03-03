@@ -16,7 +16,7 @@ describe('UserCreationDialog', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [UserCreationDialog, UserFormComponent],
-      imports: [MaterialModule, MaterialModule, StoreModule.forRoot(reducers, undefined), HttpClientTestingModule, FormsModule, ReactiveFormsModule, TranslateModule.forRoot()],
+      imports: [FormsModule, HttpClientTestingModule, MaterialModule, ReactiveFormsModule, StoreModule.forRoot(reducers, undefined), TranslateModule.forRoot()],
       providers: [
         {
           provide: MatDialogRef,

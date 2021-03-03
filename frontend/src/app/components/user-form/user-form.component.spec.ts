@@ -11,7 +11,7 @@ describe('UserFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [UserFormComponent],
-      imports: [FormsModule, ReactiveFormsModule, TranslateModule.forRoot(), MaterialModule],
+      imports: [FormsModule, MaterialModule, ReactiveFormsModule, TranslateModule.forRoot()],
     }).compileComponents();
   });
 

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HttpProgressBarComponent } from './http-progress-bar.component';
 import { MaterialModule } from '../../material/material.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,7 +14,7 @@ describe('HttpProgressBarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [HttpProgressBarComponent],
-      imports: [MaterialModule, TranslateModule.forRoot(), StoreModule.forRoot(reducers, undefined), LoggerTestingModule],
+      imports: [LoggerTestingModule, MaterialModule, StoreModule.forRoot(reducers, undefined), TranslateModule.forRoot()],
     }).compileComponents();
   });
 

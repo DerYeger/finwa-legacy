@@ -9,7 +9,7 @@ import { LoggerTestingModule } from 'ngx-logger/testing';
 describe('JwtInterceptor', () => {
   beforeEach(() =>
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot(reducers, undefined), MaterialModule, TranslateModule.forRoot(), LoggerTestingModule],
+      imports: [LoggerTestingModule, MaterialModule, StoreModule.forRoot(reducers, undefined), TranslateModule.forRoot()],
       providers: [JwtInterceptor],
     })
   );

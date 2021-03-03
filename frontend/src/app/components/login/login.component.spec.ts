@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoginComponent } from './login.component';
 import { MaterialModule } from '../../material/material.module';
 import { StoreModule } from '@ngrx/store';
@@ -19,14 +18,14 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent, HttpProgressBarComponent],
       imports: [
-        MaterialModule,
-        StoreModule.forRoot(reducers, undefined),
-        TranslateModule.forRoot(),
-        RouterTestingModule,
         FormsModule,
-        ReactiveFormsModule,
         HttpClientTestingModule,
         LoggerTestingModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        StoreModule.forRoot(reducers, undefined),
+        TranslateModule.forRoot(),
       ],
     }).compileComponents();
   });
