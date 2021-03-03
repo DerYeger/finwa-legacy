@@ -5,6 +5,7 @@ import { State } from '../../store/state';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 interface NamedRoute {
   name: string;
@@ -46,9 +47,12 @@ export class MainPage implements OnDestroy {
   private readonly tokenSubscription = this.store
     .select('apiToken')
     .pipe(filter((apiToken) => apiToken === undefined))
-    .subscribe(() => this.router.navigateByUrl('/setup'));
+    .subscribe(() => {
+      this.dialog.closeAll();
+      this.router.navigateByUrl('/setup');
+    });
 
-  public constructor(private readonly store: Store<State>, private readonly router: Router) {}
+  public constructor(private readonly dialog: MatDialog, private readonly router: Router, private readonly store: Store<State>) {}
 
   public toggleSidebar(): void {
     this.store.dispatch(toggleSidebar());
