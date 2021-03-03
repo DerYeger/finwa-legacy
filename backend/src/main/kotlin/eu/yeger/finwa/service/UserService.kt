@@ -47,6 +47,15 @@ public class UserService(
       .map(::created)
   }
 
+  public suspend fun update(user: User): ApiResult<ApiUser> {
+    return userRepository
+      .validateUpdateIsPossible(user)
+      .map { user.withHashedPassword() }
+      .onSuccess { hashedUser -> userRepository.save(hashedUser.toPersistentUser()) }
+      .map { hashedUser -> hashedUser.toApiUser() }
+      .map(::ok)
+  }
+
   public suspend fun deleteById(id: String): ApiResult<Unit> {
     return userRepository
       .validateUserWithIdExists(id)
