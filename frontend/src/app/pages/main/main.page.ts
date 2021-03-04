@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonToggleChange } from '@angular/material/button-toggle';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ interface NamedRoute {
   templateUrl: './main.page.html',
   styleUrls: ['./main.page.scss'],
 })
-export class MainPage implements OnDestroy {
+export class MainPage implements OnDestroy, OnInit {
   public readonly availableRoutes: NamedRoute[] = [
     {
       name: 'home.title',
@@ -54,8 +54,14 @@ export class MainPage implements OnDestroy {
       this.router.navigateByUrl('/setup');
     });
 
-  public constructor(private readonly backendService: BackendService, private readonly dialog: MatDialog, private readonly router: Router, private readonly store: Store<State>) {
+  public constructor(private readonly backendService: BackendService, private readonly dialog: MatDialog, private readonly router: Router, private readonly store: Store<State>) {}
+
+  public ngOnInit(): void {
     this.backendService.fetchUsers();
+  }
+
+  public ngOnDestroy(): void {
+    this.tokenSubscription.unsubscribe();
   }
 
   public toggleSidebar(): void {
@@ -72,9 +78,5 @@ export class MainPage implements OnDestroy {
 
   public toggleTheme(): void {
     this.store.dispatch(toggleTheme());
-  }
-
-  public ngOnDestroy(): void {
-    this.tokenSubscription.unsubscribe();
   }
 }

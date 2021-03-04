@@ -50,6 +50,7 @@ public class UserService(
   public suspend fun update(user: User): ApiResult<ApiUser> {
     return userRepository
       .validateUpdateIsPossible(user)
+      .andThen(User::validatePassword)
       .map { user.withHashedPassword() }
       .onSuccess { hashedUser -> userRepository.save(hashedUser.toPersistentUser()) }
       .map { hashedUser -> hashedUser.toApiUser() }
@@ -90,11 +91,18 @@ public class UserService(
       .mapError { loginFailed }
       .map(::ok)
   }
+}
 
-  private fun Credentials.validateForUser(user: User): IntermediateResult<User> {
-    return when (this matches user) {
-      true -> Ok(user)
-      false -> Err(loginFailed)
-    }
+private fun User.validatePassword(): IntermediateResult<User> {
+  return when {
+    password.isNotBlank() && password.length >= 10 -> Ok(this)
+    else -> Err(unprocessableEntity(TranslationDTO("api.error.user.password-too-short")))
+  }
+}
+
+private fun Credentials.validateForUser(user: User): IntermediateResult<User> {
+  return when (this matches user) {
+    true -> Ok(user)
+    false -> Err(loginFailed)
   }
 }
