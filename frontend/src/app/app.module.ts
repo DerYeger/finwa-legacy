@@ -14,6 +14,7 @@ import { HttpProgressBarComponent } from 'src/app/components/http-progress-bar/h
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { UserFormComponent } from 'src/app/components/user-form/user-form.component';
 import { UserTableComponent } from 'src/app/components/user-table/user-table.component';
+import { UpdateAvailableDialog } from 'src/app/dialogs/update-available/update-available.dialog';
 import { UserCreationDialog } from 'src/app/dialogs/user-creation/user-creation.dialog';
 import { UserEditDialog } from 'src/app/dialogs/user-edit/user-edit.dialog';
 import { AuthInterceptor } from 'src/app/interceptors/auth.interceptor';
@@ -29,27 +30,24 @@ import { environment } from 'src/environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    SetupPage,
-    HomePage,
-    MainPage,
     BackendConfigComponent,
-    LoginComponent,
+    HomePage,
     HttpProgressBarComponent,
-    UserManagementPage,
-    UserFormComponent,
+    LoginComponent,
+    MainPage,
+    SetupPage,
+    UpdateAvailableDialog,
     UserCreationDialog,
-    UserTableComponent,
     UserEditDialog,
+    UserFormComponent,
+    UserManagementPage,
+    UserTableComponent,
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    MaterialModule,
+    BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
-    TranslateModule.forRoot(),
-    StoreModule.forRoot(reducers, { metaReducers }),
+    HttpClientModule,
     LoggerModule.forRoot({
       level: environment.production ? NgxLoggerLevel.INFO : NgxLoggerLevel.DEBUG,
       serverLogLevel: NgxLoggerLevel.OFF,
@@ -60,7 +58,11 @@ import { environment } from 'src/environments/environment';
       colorScheme: DEFAULT_COLOR_SCHEME,
       httpResponseType: 'json',
     }),
+    MaterialModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    StoreModule.forRoot(reducers, { metaReducers }),
+    TranslateModule.forRoot(),
   ],
   providers: [
     {

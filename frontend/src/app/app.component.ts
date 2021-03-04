@@ -8,6 +8,7 @@ import * as d3 from 'd3';
 import { NGXLogger } from 'ngx-logger';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
+import { UpdateService } from 'src/app/services/update.service';
 import { setLanguage } from 'src/app/store/actions';
 import { Language, State } from 'src/app/store/state';
 
@@ -52,12 +53,18 @@ export class AppComponent implements OnDestroy {
         .classed('light-theme', 'light-theme' === theme);
     });
 
-  public constructor(private readonly store: Store<State>, private readonly translate: TranslateService, private readonly log: NGXLogger) {
+  public constructor(
+    private readonly log: NGXLogger,
+    private readonly store: Store<State>,
+    private readonly translate: TranslateService,
+    private readonly updateService: UpdateService
+  ) {
     Object.entries(this.languages).forEach(([language, locale]) => {
       translate.setTranslation(language, require(`../assets/i18n/${language}.json`));
       registerLocaleData(locale);
       log.debug(`Language ${language} registered.`);
     });
+    this.updateService.start();
   }
 
   /**
@@ -67,5 +74,6 @@ export class AppComponent implements OnDestroy {
     this.languageSubscription.unsubscribe();
     this.themeSubscription.unsubscribe();
     this.log.debug(`Subscriptions destroyed.`);
+    this.updateService.stop();
   }
 }
