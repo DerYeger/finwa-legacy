@@ -3,7 +3,8 @@ import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material
 import { TranslateService } from '@ngx-translate/core';
 import { NGXLogger } from 'ngx-logger';
 import { forkJoin, Observable, of } from 'rxjs';
-import { TranslationDTO } from '../model/api/translation-dto';
+
+import { TranslationDTO } from 'src/app/model/api/translation-dto';
 
 @Injectable({
   providedIn: 'root',

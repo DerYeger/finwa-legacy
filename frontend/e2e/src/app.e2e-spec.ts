@@ -1,5 +1,7 @@
-import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
+
+// eslint-disable-next-line no-restricted-imports
+import { AppPage } from './app.po';
 
 describe('workspace-project App', () => {
   let page: AppPage;

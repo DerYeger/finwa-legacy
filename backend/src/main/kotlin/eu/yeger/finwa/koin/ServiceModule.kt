@@ -5,7 +5,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 public val serviceModule: Module = module {
-    single {
-        UserService(get())
-    }
+  single {
+    UserService(get())
+  }
 }

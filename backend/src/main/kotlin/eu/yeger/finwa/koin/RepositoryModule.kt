@@ -1,9 +1,9 @@
 package eu.yeger.finwa.koin
 
 import eu.yeger.finwa.Arguments
-import eu.yeger.finwa.repository.InMemoryUserRepository
-import eu.yeger.finwa.repository.MongoUserRepository
-import eu.yeger.finwa.repository.UserRepository
+import eu.yeger.finwa.repository.user.InMemoryUserRepository
+import eu.yeger.finwa.repository.user.MongoUserRepository
+import eu.yeger.finwa.repository.user.UserRepository
 import eu.yeger.finwa.useDatabase
 import mu.KotlinLogging
 import org.koin.core.module.Module
@@ -13,18 +13,18 @@ import org.litote.kmongo.coroutine.CoroutineDatabase
 private val logger = KotlinLogging.logger { }
 
 public val repositoryModule: Module = when (Arguments.useDatabase) {
-    true -> module {
-        logger.info { "Using MongoDB-repositories" }
+  true -> module {
+    logger.info { "Using MongoDB-repositories" }
 
-        single<UserRepository> {
-            MongoUserRepository(get<CoroutineDatabase>().getCollection())
-        }
+    single<UserRepository> {
+      MongoUserRepository(get<CoroutineDatabase>().getCollection())
     }
-    false -> module {
-        logger.info { "Falling back to in-memory-repositories" }
+  }
+  false -> module {
+    logger.info { "Falling back to in-memory-repositories" }
 
-        single<UserRepository> {
-            InMemoryUserRepository()
-        }
+    single<UserRepository> {
+      InMemoryUserRepository()
     }
+  }
 }
