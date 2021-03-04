@@ -16,6 +16,7 @@
   "lang.en": "English",
   "login.error.credentials": "Incorrect login credentials.",
   "main.github-repository": "GitHub Repository",
+  "misc.update-available": "Update available",
   "setup.address": "Address",
   "setup.error.test-failed": "No FinWa-Backend detected at the given address.",
   "setup.http-tooltip": "HTTP may not work in every environment and is considered insecure. Should only be used for testing.",

@@ -16,6 +16,7 @@
   "lang.en": "Englisch",
   "login.error.credentials": "Anmeldedaten sind nicht korrekt.",
   "main.github-repository": "GitHub Repository",
+  "misc.update-available": "Update verfügbar",
   "setup.address": "Adresse",
   "setup.error.test-failed": "Es wurde kein FinWa-Server unter dieser Adresse gefunden.",
   "setup.http-tooltip": "HTTP funktioniert nicht in jeder Umgebung und gilt als unsicher. Nur für Testzwecke empfohlen.",
