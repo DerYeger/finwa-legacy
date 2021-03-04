@@ -10,7 +10,7 @@
   "api.error.user.name-taken": "Username is already taken.",
   "api.error.user.not-found": "User not found.",
   "app.title": "FinWa",
-  "events.login.expired": "Anmeldung abgelaufen.",
+  "events.login.expired": "Login expired.",
   "home.title": "Home",
   "lang.de": "German",
   "lang.en": "English",
