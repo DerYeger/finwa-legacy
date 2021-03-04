@@ -18,3 +18,6 @@ public fun notFound(translationDTO: TranslationDTO): ResponseEntity<TranslationD
 
 public fun unauthorized(translationDTO: TranslationDTO): ResponseEntity<TranslationDTO> =
   ResponseEntity(HttpStatusCode.Unauthorized, translationDTO)
+
+public fun unprocessableEntity(translationDTO: TranslationDTO): ResponseEntity<TranslationDTO> =
+  ResponseEntity(HttpStatusCode.UnprocessableEntity, translationDTO)
