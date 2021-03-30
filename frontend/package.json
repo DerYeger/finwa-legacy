@@ -37,7 +37,7 @@
     "@angular/service-worker": "11.2.4",
     "@ngrx/store": "11.0.1",
     "@ngx-translate/core": "13.0.0",
-    "d3": "6.6.1",
+    "d3": "6.6.2",
     "ngrx-store-localstorage": "11.0.0",
     "ngx-logger": "4.2.1",
     "rxjs": "6.6.7",
