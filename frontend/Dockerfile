@@ -7,7 +7,7 @@ COPY . .
 RUN npm install &&\
     npm run build --prod
 
-FROM nginx:1.19.8-alpine
+FROM nginx:1.19.9-alpine
 
 COPY --from=BUILDER /usr/app/dist/finwa-frontend/ /usr/share/nginx/html
 
