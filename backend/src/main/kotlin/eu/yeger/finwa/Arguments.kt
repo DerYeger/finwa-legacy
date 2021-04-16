@@ -1,7 +1,7 @@
 package eu.yeger.finwa
 
 import com.apurebase.arkenv.Arkenv
-import com.apurebase.arkenv.argument
+import com.apurebase.arkenv.util.argument
 
 public object Arguments : Arkenv() {
   public val url: String by argument {
