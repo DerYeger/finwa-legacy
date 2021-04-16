@@ -101,13 +101,9 @@ tasks {
   }
 
   withType<Test> {
-    dependsOn(startManagedMongoDb)
     useJUnitPlatform()
     environment(
-      "DOMAIN" to "example.org",
-      "DATABASE_HOST" to "localhost",
-      "DATABASE_PORT" to "27017",
-      "DATABASE_NAME" to "finwa-test"
+      "DOMAIN" to "example.org"
     )
   }
 
