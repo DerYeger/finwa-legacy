@@ -20,7 +20,7 @@ export const reducers: ActionReducerMap<State> = {
   apiToken: createReducer<ApiToken | undefined>(
     undefined,
     on(login, (state, { apiToken }) => apiToken),
-    on(logout, () => undefined)
+    on(logout, (_) => undefined)
   ),
   userCache: createReducer<UserCache>(
     { users: [], timestamp: undefined },
